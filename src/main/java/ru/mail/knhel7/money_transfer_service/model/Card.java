@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -49,7 +49,20 @@ public class Card {
         return "no money '" + money.currency() + "'";
     }
 
-    public Integer getAmountPercentage(Money money, double percentage) {
-        return Math.toIntExact(Math.round(money.amount() * percentage / 100));
+    public Money getAmountPercentage(Money money, double percentage) {
+        return new Money(money.currency(), Math.toIntExact(Math.round(money.amount() * percentage / 100)));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return Objects.equals(getNumber(), card.getNumber());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNumber());
     }
 }
