@@ -1,11 +1,10 @@
-# Card-money-transfer-service
+# Card money transfer service
 
 Сервис предназначен для перевода денег между банковскими картами.
 
 REST-сервис работает на http://localhost:5500/transfer по POST-запросу application/json.
 
 ---
-
 
 ## Запуск сервиса:
 
