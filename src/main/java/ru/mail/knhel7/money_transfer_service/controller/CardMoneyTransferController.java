@@ -1,10 +1,7 @@
 package ru.mail.knhel7.money_transfer_service.controller;
 
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.mail.knhel7.money_transfer_service.model.Card;
 import ru.mail.knhel7.money_transfer_service.model.Transfer;
 import ru.mail.knhel7.money_transfer_service.service.CardMoneyTransferService;
@@ -22,7 +19,8 @@ public class CardMoneyTransferController {
     }
 
     @PostMapping("transfer")
-    public void transferMoney(@Validated Transfer transfer) {
+    public void transferMoney(@RequestBody Transfer transfer) { // @Validated
+        System.out.println(transfer);
         Integer operationID = transferService.transferMoney(transfer);
     }
 

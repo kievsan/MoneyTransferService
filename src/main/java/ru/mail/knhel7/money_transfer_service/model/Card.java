@@ -41,4 +41,9 @@ public class Card {
     public int hashCode() {
         return Objects.hash(getNumber());
     }
+
+    @Override
+    public String toString() {
+        return "Card №" + number + " " + validMonthYear + " " + amount;
+    }
 }

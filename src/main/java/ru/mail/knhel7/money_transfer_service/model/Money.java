@@ -15,4 +15,9 @@ public record Money(@NotBlank Currency currency, @Size(min = 0) Integer value) {
     public Money getPercentage(double percentage) {
         return new Money(currency, Math.toIntExact(Math.round(value * percentage / 100)));
     }
+
+    @Override
+    public String toString() {
+        return "(" + value + " " + currency + ")";
+    }
 }
