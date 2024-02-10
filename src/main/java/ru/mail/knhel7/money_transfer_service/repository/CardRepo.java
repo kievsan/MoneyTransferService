@@ -20,7 +20,7 @@ public class CardRepo implements ICardRepo{
     }
 
     private static Map<Integer, Transfer> transfers = new HashMap<>();
-    private static Integer transferID = 0;
+    private static Integer transferID = 1;
 
     public Integer executeTransfer(Transfer transfer, Card sender, Card receiver) {
         try {
@@ -29,8 +29,13 @@ public class CardRepo implements ICardRepo{
         } catch (Exception ex) {
             return 0;
         }
-        transfers.put(++transferID, transfer);
-        return transferID;
+        transfers.put(transferID, transfer);
+        return transferID++;
+    }
+
+    @Override
+    public List<Transfer> getAllTransfers() {
+        return transfers.values().stream().toList();
     }
 
     @Override
@@ -54,10 +59,14 @@ public class CardRepo implements ICardRepo{
         if (card.getCurrency() != money.currency()) {
             throw new RuntimeException("не задана или неподходящая валюта на карте " + cardNumber);
         }
-        if (card.getAmount() < money.value()) {
+
+        Integer requiredSum = money.value() + money.getPercentage(1).value();
+
+        if (card.getAmount() < requiredSum) {
             throw new RuntimeException("недостаточно средств на карте " + cardNumber);
         }
-        card.setAmount(card.getAmount() - money.value());
+
+        card.setAmount(card.getAmount() - requiredSum);
 //        cards.put(card.getNumber(), card);
         return card;
     }

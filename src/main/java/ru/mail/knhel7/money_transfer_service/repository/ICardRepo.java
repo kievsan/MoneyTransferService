@@ -11,4 +11,5 @@ public interface ICardRepo {
     public Optional<Card> getCardByNumber(String number);
     public List<Card> getAllCards();
     public List<String> getAllCardNumbers();
+    public List<Transfer> getAllTransfers();
 }

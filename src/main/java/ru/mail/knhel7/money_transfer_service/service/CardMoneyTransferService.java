@@ -5,12 +5,13 @@ import ru.mail.knhel7.money_transfer_service.model.Card;
 import ru.mail.knhel7.money_transfer_service.model.Transfer;
 import ru.mail.knhel7.money_transfer_service.repository.CardRepo;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
 public class CardMoneyTransferService implements ICardMoneyTransferService {
 
-    private CardRepo cardRepo;
+    private final CardRepo cardRepo;
 
     public CardMoneyTransferService(CardRepo cardRepo) {
         this.cardRepo = cardRepo;
@@ -44,5 +45,20 @@ public class CardMoneyTransferService implements ICardMoneyTransferService {
         }
 
         return transferID;
+    }
+
+    @Override
+    public List<Transfer> getAllTransfers() {
+        return cardRepo.getAllTransfers();
+    }
+
+    @Override
+    public List<Card> getAllCards() {
+        return cardRepo.getAllCards();
+    }
+
+    @Override
+    public List<String> getAllCardNumbers() {
+        return cardRepo.getAllCardNumbers();
     }
 }
