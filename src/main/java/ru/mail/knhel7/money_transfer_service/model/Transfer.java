@@ -6,16 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NotBlank
 public class Transfer {
-    @NotBlank
     String cardFromNumber;
-    @NotBlank
     String cardFromValidTill;
-    @NotBlank
     String cardFromCVV;
-    @NotBlank
     String cardToNumber;
-    @NotBlank
     Money amount;
 
     public Transfer() {
