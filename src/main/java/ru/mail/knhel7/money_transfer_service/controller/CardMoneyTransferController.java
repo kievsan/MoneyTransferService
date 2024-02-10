@@ -1,4 +1,4 @@
 package ru.mail.knhel7.money_transfer_service.controller;
 
-public class TransferController {
+public class CardMoneyTransferController {
 }

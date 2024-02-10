@@ -5,23 +5,14 @@ import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
-public record Money(@NotBlank String currency, @Size(min = 0) Integer amount) {
+public record Money(@NotBlank Currency currency, @Size(min = 0) Integer value) {
 
-    public Money(String currency, Integer amount) {
+    public Money(Currency currency, Integer value) {
         this.currency = currency;
-        this.amount = amount;
+        this.value = value;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Money money = (Money) o;
-        return Objects.equals(currency, money.currency) && Objects.equals(amount, money.amount);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(currency, amount);
+    public Money getPercentage(double percentage) {
+        return new Money(currency, Math.toIntExact(Math.round(value * percentage / 100)));
     }
 }
