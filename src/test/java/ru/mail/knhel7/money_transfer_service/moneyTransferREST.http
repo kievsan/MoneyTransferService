@@ -7,7 +7,7 @@
 
 # Получить Список переводов
 GET {{baseUrl}}/transfer
-Accept: application/json
+Content-Type: application/json
 
 ###
 
@@ -28,7 +28,7 @@ Content-Type: application/json
 
 ###
 
-# Выполнить Перевод с ERR amount.value
+# Выполнить Перевод с ERR: amount.value
 POST {{baseUrl}}/transfer
 Content-Type: application/json
 
@@ -45,7 +45,7 @@ Content-Type: application/json
 
 ###
 
-# Выполнить Перевод с ERR cardFromCVV
+# Выполнить Перевод с ERR: cardFromCVV
 POST {{baseUrl}}/transfer
 Content-Type: application/json
 
@@ -62,7 +62,54 @@ Content-Type: application/json
 
 ###
 
+# Выполнить Перевод с ERR: has no card with such number (cardFromNumber)
+POST {{baseUrl}}/transfer
+Content-Type: application/json
 
+{
+  "cardFromNumber": "1234567890120000",
+  "cardFromValidTill": "02/34",
+  "cardFromCVV": "999",
+  "cardToNumber": "2345678901234561",
+  "amount": {
+    "value": 999,
+    "currency": "RUR"
+  }
+}
+
+###
+
+# Выполнить Перевод с ERR: has no card with such number (cardToNumber)
+POST {{baseUrl}}/transfer
+Content-Type: application/json
+
+{
+  "cardFromNumber": "1234567890123456",
+  "cardFromValidTill": "02/34",
+  "cardFromCVV": "999",
+  "cardToNumber": "2345678901230000",
+  "amount": {
+    "value": 999,
+    "currency": "RUR"
+  }
+}
+
+###
+
+# Выполнить Перевод с ERR: amount.value
+POST {{baseUrl}}/transfer
+Content-Type: application/json
+
+{
+  "cardFromNumber": "1234567890123456",
+  "cardFromValidTill": "02/34",
+  "cardFromCVV": "231",
+  "cardToNumber": "2345678901234561",
+  "amount": {
+    "value": 100000000,
+    "currency": "RUR"
+  }
+}
 
 ###
 

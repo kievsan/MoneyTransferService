@@ -1,4 +1,4 @@
-package ru.mail.knhel7.money_transfer_service.model;
+package ru.mail.knhel7.money_transfer_service.model.response;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

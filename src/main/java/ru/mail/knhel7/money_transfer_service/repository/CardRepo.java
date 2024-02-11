@@ -1,11 +1,11 @@
 package ru.mail.knhel7.money_transfer_service.repository;
 
 import org.springframework.stereotype.Repository;
+import ru.mail.knhel7.money_transfer_service.exception.TransferException;
 import ru.mail.knhel7.money_transfer_service.model.*;
 import ru.mail.knhel7.money_transfer_service.model.Currency;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class CardRepo implements ICardRepo{
@@ -43,10 +43,10 @@ public class CardRepo implements ICardRepo{
     @Override
     public Card putMoney(String cardNumber, Money money) {
         // может выбросить ошибку - NoSuchElementException (extends RuntimeException):
-        Card card = getCardByNumber(cardNumber).get();
+         Card card = getCardByNumber(cardNumber).get();
 
         if (card.getCurrency() != money.currency()) {
-            throw new RuntimeException("не задана или неподходящая валюта на карте " + cardNumber);
+            throw new TransferException("не задана или неподходящая валюта на карте №" + cardNumber);
         }
         card.setAmount(card.getAmount() + money.value());
 //        cards.put(card.getNumber(), card);
@@ -56,16 +56,17 @@ public class CardRepo implements ICardRepo{
     @Override
     public Card spendMoney(String cardNumber, Money money) {
         // может выбросить ошибку - NoSuchElementException (extends RuntimeException):
-        Card card = getCardByNumber(cardNumber).get();
+         Card card = getCardByNumber(cardNumber).get();
 
         if (card.getCurrency() != money.currency()) {
-            throw new RuntimeException("не задана или неподходящая валюта на карте " + cardNumber);
+            throw new TransferException("не задана или неподходящая валюта на карте №" + cardNumber);
         }
 
         Integer requiredSum = money.value() + money.getPercentage(1).value();
 
         if (card.getAmount() < requiredSum) {
-            throw new RuntimeException("недостаточно средств на карте " + cardNumber);
+            throw new TransferException("недостаточно средств (" + card.getAmount() + " " + card.getCurrency() +
+                    ") на карте №" + cardNumber);
         }
 
         card.setAmount(card.getAmount() - requiredSum);
