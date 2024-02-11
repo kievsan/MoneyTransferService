@@ -5,11 +5,12 @@ import ru.mail.knhel7.money_transfer_service.model.*;
 import ru.mail.knhel7.money_transfer_service.model.Currency;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class CardRepo implements ICardRepo{
 
-    private static Map<String, Card> cards = new HashMap<>();
+    private final static HashMap<String, Card> cards = new HashMap<>();
     static {
         cards.put("1234567890123456",
                 new Card("1234567890123456", "231", "02/34", Currency.RUR, 167000));
@@ -19,7 +20,7 @@ public class CardRepo implements ICardRepo{
                 new Card("3456789012345612", "777", "11/24", Currency.RUR, 33300));
     }
 
-    private static Map<Integer, Transfer> transfers = new HashMap<>();
+    private final static HashMap<Integer, Transfer> transfers = new HashMap<>();
     private static Integer transferID = 1;
 
     public Integer executeTransfer(Transfer transfer, Card sender, Card receiver) {

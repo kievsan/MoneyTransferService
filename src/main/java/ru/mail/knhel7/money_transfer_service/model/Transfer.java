@@ -1,6 +1,5 @@
 package ru.mail.knhel7.money_transfer_service.model;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;

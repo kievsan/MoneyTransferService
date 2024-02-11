@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
-public record Money(Currency currency, @Min(0) Integer value) {
+public record Money(Currency currency, @Min(value = 0, message = "should not be negative") Integer value) {
 
     public Money(Currency currency, Integer value) {
         this.currency = currency;
