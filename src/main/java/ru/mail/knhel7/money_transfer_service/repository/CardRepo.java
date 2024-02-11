@@ -30,7 +30,8 @@ public class CardRepo implements ICardRepo{
         } catch (Exception ex) {
             return 0;
         }
-        transfers.put(transferID, transfer);
+        transfer.setId(transferID);
+        transfers.put(transfer.getId(), transfer);
         return transferID++;
     }
 

@@ -28,7 +28,7 @@ Content-Type: application/json
 
 ###
 
-# Выполнить Перевод с err
+# Выполнить Перевод с ERR amount.value
 POST {{baseUrl}}/transfer
 Content-Type: application/json
 
@@ -45,7 +45,7 @@ Content-Type: application/json
 
 ###
 
-# Выполнить Перевод с err
+# Выполнить Перевод с ERR cardFromCVV
 POST {{baseUrl}}/transfer
 Content-Type: application/json
 
