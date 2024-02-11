@@ -28,11 +28,37 @@ Content-Type: application/json
 
 ###
 
+# Выполнить Перевод с err
+POST {{baseUrl}}/transfer
+Content-Type: application/json
 
+{
+  "cardFromNumber": "1234567890123456",
+  "cardFromValidTill": "02/34",
+  "cardFromCVV": "231",
+  "cardToNumber": "2345678901234561",
+  "amount": {
+    "value": -1000,
+    "currency": "RUR"
+  }
+}
 
 ###
 
+# Выполнить Перевод с err
+POST {{baseUrl}}/transfer
+Content-Type: application/json
 
+{
+  "cardFromNumber": "1234567890123456",
+  "cardFromValidTill": "02/34",
+  "cardFromCVV": "23100000",
+  "cardToNumber": "2345678901234561",
+  "amount": {
+    "value": 1000,
+    "currency": "RUR"
+  }
+}
 
 ###
 
