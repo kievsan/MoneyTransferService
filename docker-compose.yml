@@ -1,0 +1,18 @@
+version: "1.0"
+
+networks:
+  backend:
+
+services:
+  rest_transfer:
+    build: ./
+    ports:
+#      - "8088"
+      - "5500:8088"
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
