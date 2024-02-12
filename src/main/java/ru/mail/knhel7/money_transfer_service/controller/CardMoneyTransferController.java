@@ -13,7 +13,7 @@ import ru.mail.knhel7.money_transfer_service.service.CardMoneyTransferService;
 import java.util.List;
 
 
-//@CrossOrigin(origins = "${client.url}")
+@CrossOrigin(origins = "${client.url}")
 @RestController
 @RequestMapping(value = "/",
         consumes = MediaType.APPLICATION_JSON_VALUE,

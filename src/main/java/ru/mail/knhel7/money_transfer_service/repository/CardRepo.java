@@ -65,7 +65,7 @@ public class CardRepo implements ICardRepo{
         Integer requiredSum = money.value() + money.getPercentage(1).value();
 
         if (card.getAmount() < requiredSum) {
-            throw new TransferException("недостаточно средств (" + card.getAmount() + " " + card.getCurrency() +
+            throw new TransferException("недостаточно средств (" + card.getAmount()/100 + " " + card.getCurrency() +
                     ") на карте №" + cardNumber);
         }
 
