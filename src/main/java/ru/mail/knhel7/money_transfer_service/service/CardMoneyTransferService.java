@@ -32,22 +32,22 @@ public class CardMoneyTransferService implements ICardMoneyTransferService {
         try {
             sender = cardRepo.spendMoney(transfer.getCardFromNumber(), transfer.getAmount());
         } catch (NoSuchElementException ex) {
-            throw new CardNotFoundEx("(" + ex + ") " + "Карта отправителя №" + transfer.getCardFromNumber() + " не найдена...");
+            throw new CardNotFoundEx("Карта отправителя №" + transfer.getCardFromNumber() + " не найдена...");
         } catch (TransferException ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new OtherTransferEx("(" + ex + ") " + transfer);
+            throw new OtherTransferEx(transfer + " (" + ex + ")");
         }
         // logger...
 
         try {
             receiver = cardRepo.putMoney(transfer.getCardToNumber(), transfer.getAmount());
         } catch (NoSuchElementException ex) {
-            throw new CardNotFoundEx("(" + ex + ") " + "Карта получателя №" + transfer.getCardFromNumber() + " не найдена...");
+            throw new CardNotFoundEx("Карта получателя №" + transfer.getCardFromNumber() + " не найдена...");
         } catch (TransferException ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new OtherTransferEx("(" + ex + ") " + transfer);
+            throw new OtherTransferEx(transfer + " (" + ex + ")");
         }
         // logger...
 
