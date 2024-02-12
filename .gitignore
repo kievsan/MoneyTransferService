@@ -17,7 +17,6 @@ out/
 
 ### IntelliJ IDEA ###
 .idea/
-.idea/src/main/gen/
 *.iws
 *.iml
 *.ipr
