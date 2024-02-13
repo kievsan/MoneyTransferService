@@ -3,9 +3,8 @@ package ru.mail.knhel7.money_transfer_service.model;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import ru.mail.knhel7.money_transfer_service.model.addit_code.Currency;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Objects;
 
 @Getter

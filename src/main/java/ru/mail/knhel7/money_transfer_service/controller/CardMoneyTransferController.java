@@ -1,21 +1,15 @@
 package ru.mail.knhel7.money_transfer_service.controller;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.mail.knhel7.money_transfer_service.model.Transfer;
-import ru.mail.knhel7.money_transfer_service.model.response.TransferExResp;
-import ru.mail.knhel7.money_transfer_service.model.response.TransferResponse;
+import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
+import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
 import ru.mail.knhel7.money_transfer_service.service.CardMoneyTransferService;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @CrossOrigin(origins = "${client.url}")
@@ -31,33 +25,23 @@ public class CardMoneyTransferController {
     public CardMoneyTransferController(CardMoneyTransferService transferService) {
         this.service = transferService;
     }
-    @PostMapping(value = "transfer",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
+
+    @PostMapping("transfer")
     public ResponseEntity<?> transferMoney(@RequestBody @Validated Transfer transfer) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(List.of(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE)));
-
-        HttpStatus status;
-        Object response;
-
         System.out.println(transfer);
         Integer operationId = service.transferMoney(transfer);
-
-        if (operationId != 0) {
-            status = HttpStatus.OK;
-            response = new TransferResponse(operationId);
-        } else {
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-            response = new TransferExResp("Transfer: fail");
-        }
-
-        return new ResponseEntity<>(response, headers, status);
+        return ResponseEntity.ok(new TransferResponse(operationId));
     }
 
     @GetMapping("transfer")
-    public List<Transfer> getAllTransfers() {
-        return service.getAllTransfers();
+    public List<Transfer> getListTransfers() {
+        return service.getTransferList();
+    }
+
+    @PostMapping("confirmOperation")
+    public ResponseEntity<?> transferConfirm(@RequestBody @Validated TransferConfirm confirm) {
+        System.out.println("Confirmed transfer №" + confirm.getOperationId());
+        Integer operationId = service.transferConfirm(confirm);
+        return ResponseEntity.ok(new TransferResponse(operationId));
     }
 }

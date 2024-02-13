@@ -5,10 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.mail.knhel7.money_transfer_service.exception.CardNotFoundEx;
+import ru.mail.knhel7.money_transfer_service.exception.NotFoundEx;
 import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
 import ru.mail.knhel7.money_transfer_service.exception.TransferException;
-import ru.mail.knhel7.money_transfer_service.model.response.TransferExResp;
+import ru.mail.knhel7.money_transfer_service.model.http_response.TransferExResp;
 
 
 @RestControllerAdvice
@@ -22,8 +22,8 @@ public class TransferExceptionHandlerAdvice extends ResponseEntityExceptionHandl
         return new ResponseEntity<>(errResp, HttpStatusCode.valueOf(400));
     }
 
-    @ExceptionHandler(CardNotFoundEx.class)
-    public ResponseEntity<TransferExResp> handlerCardNotFound(CardNotFoundEx ex) {
+    @ExceptionHandler(NotFoundEx.class)
+    public ResponseEntity<TransferExResp> handlerCardNotFound(NotFoundEx ex) {
         // logger(ex.getMessage());
         TransferExResp errResp = new TransferExResp(ex.getMessage());
         System.out.println(errResp);

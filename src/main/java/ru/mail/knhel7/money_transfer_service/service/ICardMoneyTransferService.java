@@ -1,14 +1,17 @@
 package ru.mail.knhel7.money_transfer_service.service;
 
 import ru.mail.knhel7.money_transfer_service.model.Card;
-import ru.mail.knhel7.money_transfer_service.model.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
+import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 
-import java.math.BigInteger;
 import java.util.List;
 
 public interface ICardMoneyTransferService {
     Integer transferMoney(Transfer transfer);
-    public List<Transfer> getAllTransfers();
+    Integer transferConfirm(TransferConfirm confirm);
+    public List<Transaction<Transfer>> getTransferTransactionList();
+    public List<Transfer> getTransferList();
     public List<Card> getAllCards();
     public List<String> getAllCardNumbers();
 }

@@ -1,8 +1,7 @@
-package ru.mail.knhel7.money_transfer_service.model.response;
+package ru.mail.knhel7.money_transfer_service.model.http_response;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpStatusCode;
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ public class TransferExResp {
     }
 
     public TransferExResp(String message) {
-        this.message = "Transfer error: " + message;
+        this.message = "Transfer fail: " + message;
     }
 
     @Override

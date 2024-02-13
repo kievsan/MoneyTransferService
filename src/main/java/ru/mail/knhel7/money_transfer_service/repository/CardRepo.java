@@ -1,16 +1,22 @@
 package ru.mail.knhel7.money_transfer_service.repository;
 
+import lombok.Getter;
 import org.springframework.stereotype.Repository;
+import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
 import ru.mail.knhel7.money_transfer_service.exception.TransferException;
 import ru.mail.knhel7.money_transfer_service.model.*;
-import ru.mail.knhel7.money_transfer_service.model.Currency;
+import ru.mail.knhel7.money_transfer_service.model.addit_code.Currency;
+import ru.mail.knhel7.money_transfer_service.model.addit_code.TransactionStatus;
+import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class CardRepo implements ICardRepo{
 
-    private final static HashMap<String, Card> cards = new HashMap<>();
+    private final static Map<String, Card> cards = new ConcurrentHashMap<>();
     static {
         cards.put("1234567890123456",
                 new Card("1234567890123456", "231", "02/34", Currency.RUR, 167000));
@@ -20,24 +26,46 @@ public class CardRepo implements ICardRepo{
                 new Card("3456789012345612", "777", "11/24", Currency.RUR, 33300));
     }
 
-    private final static HashMap<Integer, Transfer> transfers = new HashMap<>();
-    private static Integer transferID = 1;
+    private final static Map<Integer, Transaction<?>> transactions = new ConcurrentHashMap<>();
 
-    public Integer executeTransfer(Transfer transfer, Card sender, Card receiver) {
+
+    public void executeTransfer(Transaction<Transfer> transaction, Card sender, Card receiver) {
         try {
             cards.put(sender.getNumber(), sender);
             cards.put(receiver.getNumber(), receiver);
+            transaction.setStatus(TransactionStatus.COMPLETED);
+            transactions.put(transaction.getID(), transaction);
         } catch (Exception ex) {
-            return 0;
+            throw new OtherTransferEx("Ошибка сервера: возможно нарушена целостность данных");
         }
-        transfer.setId(transferID);
-        transfers.put(transfer.getId(), transfer);
-        return transferID++;
+    }
+
+    public Integer addTransaction(Transfer transfer) {
+        Transaction<Transfer> transaction = new Transaction<>(transfer);
+        try{
+            transactions.put(transaction.getID(), transaction);
+        } catch (Exception ex) {
+            throw new OtherTransferEx("Ошибка сервера: возможно нарушена целостность данных");
+        }
+        return transaction.getID();
+    }
+
+    public Transaction<?> delTransactionById(Integer id) {
+        return transactions.remove(id);
     }
 
     @Override
-    public List<Transfer> getAllTransfers() {
-        return transfers.values().stream().toList();
+    public Optional<Transaction<?>> getTransactionByID(int id) {
+        return Optional.ofNullable(transactions.get(id));
+    }
+
+    public Map<Integer, Transaction<?>> getTransactions() {
+        return transactions;
+    }
+
+    @Override
+    public List<Transaction<?>> getTransactionList() {
+        return transactions.values().stream().toList();
     }
 
     @Override

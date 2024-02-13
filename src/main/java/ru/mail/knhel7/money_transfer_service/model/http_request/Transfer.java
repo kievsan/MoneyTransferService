@@ -1,10 +1,12 @@
-package ru.mail.knhel7.money_transfer_service.model;
+package ru.mail.knhel7.money_transfer_service.model.http_request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import ru.mail.knhel7.money_transfer_service.model.Money;
 
 @Getter
 @Setter
@@ -15,13 +17,12 @@ public class Transfer {
     @NotBlank @Size(min = 3, max = 3) String cardFromCVV;
     @NotBlank @Size(min = 16, max = 16) String cardToNumber;
 
-    Money amount;
+    @NotNull Money amount;
 
-    @Min(0)
-    private Integer id;
+    private double feePercent;
 
     public Transfer() {
-        this.id = 0;
+
     }
 
     public Transfer(String cardFromNumber, String cardFromValidTill, String cardFromCVV, String cardToNumber, Money amount) {
@@ -31,12 +32,7 @@ public class Transfer {
         this.cardFromCVV = cardFromCVV;
         this.cardToNumber = cardToNumber;
         this.amount = amount;
-    }
-
-    public void setId(Integer id) {
-        if (this.id == 0) {
-            this.id = id;
-        }
+        this.feePercent = 1.0;
     }
 
 

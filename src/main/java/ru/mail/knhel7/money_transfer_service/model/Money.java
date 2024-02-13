@@ -1,10 +1,7 @@
 package ru.mail.knhel7.money_transfer_service.model;
 
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
-import java.util.Objects;
+import ru.mail.knhel7.money_transfer_service.model.addit_code.Currency;
 
 public record Money(Currency currency, @Min(value = 0, message = "should not be negative") Integer value) {
 

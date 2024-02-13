@@ -1,6 +1,5 @@
-package ru.mail.knhel7.money_transfer_service.model.response;
+package ru.mail.knhel7.money_transfer_service.model.http_response;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
