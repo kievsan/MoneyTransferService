@@ -21,7 +21,7 @@ Content-Type: application/json
   "cardFromCVV": "231",
   "cardToNumber": "2345678901234561",
   "amount": {
-    "value": 1000,
+    "value": 2000,
     "currency": "RUR"
   }
 }

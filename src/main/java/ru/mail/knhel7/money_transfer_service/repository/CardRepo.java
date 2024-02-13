@@ -1,6 +1,5 @@
 package ru.mail.knhel7.money_transfer_service.repository;
 
-import lombok.Getter;
 import org.springframework.stereotype.Repository;
 import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
 import ru.mail.knhel7.money_transfer_service.exception.TransferException;
@@ -82,7 +81,10 @@ public class CardRepo implements ICardRepo{
     }
 
     @Override
-    public Card spendMoney(String cardNumber, Money money) {
+    public Card spendMoney(Transfer transfer) {
+        String cardNumber = transfer.getCardFromNumber();
+        Money money = transfer.getAmount();
+
         // может выбросить ошибку - NoSuchElementException (extends RuntimeException):
          Card card = getCardByNumber(cardNumber).get();
 
@@ -90,7 +92,7 @@ public class CardRepo implements ICardRepo{
             throw new TransferException("не задана или неподходящая валюта на карте №" + cardNumber);
         }
 
-        Integer requiredSum = money.value() + money.getPercentage(1).value();
+        Integer requiredSum = money.value() + transfer.setCommission().value();
 
         if (card.getAmount() < requiredSum) {
             throw new TransferException("недостаточно средств (" + card.getAmount()/100 + " " + card.getCurrency() +

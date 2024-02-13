@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import ru.mail.knhel7.money_transfer_service.model.Money;
+import ru.mail.knhel7.money_transfer_service.model.addit_code.Currency;
 
 @Getter
 @Setter
@@ -19,7 +20,8 @@ public class Transfer {
 
     @NotNull Money amount;
 
-    private double feePercent;
+    int feePercent=1;
+    Money commission;
 
     public Transfer() {
 
@@ -32,9 +34,12 @@ public class Transfer {
         this.cardFromCVV = cardFromCVV;
         this.cardToNumber = cardToNumber;
         this.amount = amount;
-        this.feePercent = 1.0;
     }
 
+    public Money setCommission() {
+        this.commission = amount.getPercentage(feePercent);
+        return this.commission;
+    }
 
     @Override
     public String toString() {

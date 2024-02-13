@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ICardRepo {
     Card putMoney(String cardNumber, Money money);
-    Card spendMoney(String cardNumber, Money money);
+    Card spendMoney(Transfer transfer);
     Optional<Card> getCardByNumber(String number);
     List<Card> getAllCards();
     List<String> getAllCardNumbers();

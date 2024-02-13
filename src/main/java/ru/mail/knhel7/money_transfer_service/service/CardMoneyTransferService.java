@@ -57,7 +57,7 @@ public class CardMoneyTransferService implements ICardMoneyTransferService {
     public Card validateSender(Transfer transfer) {
         Card sender;
         try {
-            sender = cardRepo.spendMoney(transfer.getCardFromNumber(), transfer.getAmount());
+            sender = cardRepo.spendMoney(transfer);
             // logger...
             return sender;
         } catch (NoSuchElementException ex) {
