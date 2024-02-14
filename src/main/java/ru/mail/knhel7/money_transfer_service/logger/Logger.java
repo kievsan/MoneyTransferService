@@ -17,6 +17,21 @@ public class Logger {
         return instance;
     }
 
+    public String getLogID() {
+        return "[" +
+                String.format("%1$td.%1$tm.%1$tY %tT", new Date()) +
+                ", " +
+                num++ +
+                "]";
+    }
+
+    public String getLogTransactionTitle(Transaction<?> transaction, String title) {
+        return getLogID() + " " +
+                (title.isEmpty() ? title : title + ": №") +
+                transaction.getID() + "-" +
+                transaction.getStatus().description();
+    }
+
     public void logTransaction(Transaction<?> transaction, String title) {
         // вывод журнала организовать в файл!
         System.out.println(getLogTransactionTitle(transaction, title) + " ==> " + transaction.getOperation());
@@ -35,21 +50,5 @@ public class Logger {
     public void logTransactionErr(TransferExResp ex) {
         // вывод журнала организовать в файл!
         System.out.println(getLogID() + " " + ex);
-    }
-
-    public String getLogTransactionTitle(Transaction<?> transaction, String title) {
-        // вывод журнала организовать в файл!
-        return getLogID() + " " +
-                (title.isEmpty() ? title : title + ": №") +
-                transaction.getID() + "-" +
-                transaction.getStatus().description();
-    }
-
-    public String getLogID() {
-        return "[" +
-                String.format("%1$td.%1$tm.%1$tY %tT", new Date()) +
-                ", " +
-                num++ +
-                "]";
     }
 }

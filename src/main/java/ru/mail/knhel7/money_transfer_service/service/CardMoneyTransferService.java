@@ -59,7 +59,6 @@ public class CardMoneyTransferService implements ICardMoneyTransferService {
         Card sender;
         try {
             sender = cardRepo.spendMoney(transfer);
-            // logger...
             return sender;
         } catch (NoSuchElementException ex) {
             throw new NotFoundEx("Карта отправителя №" + transfer.getCardFromNumber() + " не найдена...");

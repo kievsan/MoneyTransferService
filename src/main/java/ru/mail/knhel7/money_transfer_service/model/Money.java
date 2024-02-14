@@ -11,7 +11,6 @@ public record Money(Currency currency, @Min(value = 0, message = "should not be 
     }
 
     public Money getPercentage(double percentage) {
-//        return new Money(currency, Math.toIntExact(Math.round(value * percentage / 100)));
         return new Money(currency, Math.toIntExact(Math.round(value * percentage / 100)));
     }
 

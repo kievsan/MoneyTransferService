@@ -19,7 +19,6 @@ public class TransferExceptionHandlerAdvice extends ResponseEntityExceptionHandl
 
     @ExceptionHandler(TransferException.class)
     public ResponseEntity<TransferExResp> handlerTransfer(TransferException ex) {
-        // logger(ex.getMessage());
         TransferExResp errResp = new TransferExResp(ex.getMessage());
         logger.logTransactionErr(errResp);
         return new ResponseEntity<>(errResp, HttpStatusCode.valueOf(400));
@@ -27,7 +26,6 @@ public class TransferExceptionHandlerAdvice extends ResponseEntityExceptionHandl
 
     @ExceptionHandler(NotFoundEx.class)
     public ResponseEntity<TransferExResp> handlerCardNotFound(NotFoundEx ex) {
-        // logger(ex.getMessage());
         TransferExResp errResp = new TransferExResp(ex.getMessage());
         logger.logTransactionErr(errResp);
         return new ResponseEntity<>(errResp, HttpStatusCode.valueOf(404));
@@ -35,7 +33,6 @@ public class TransferExceptionHandlerAdvice extends ResponseEntityExceptionHandl
 
     @ExceptionHandler(OtherTransferEx.class)
     public ResponseEntity<TransferExResp> handlerTransfer(OtherTransferEx ex) {
-        // logger(ex.getMessage());
         TransferExResp errResp = new TransferExResp(ex.getMessage());
         logger.logTransactionErr(errResp);
         return new ResponseEntity<>(errResp, HttpStatusCode.valueOf(500));
