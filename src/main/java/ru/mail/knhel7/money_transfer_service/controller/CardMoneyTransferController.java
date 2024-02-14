@@ -12,6 +12,7 @@ import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.service.CardMoneyTransferService;
 import ru.mail.knhel7.money_transfer_service.service.ICardMoneyTransferService;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -23,7 +24,7 @@ public class CardMoneyTransferController {
     private final Logger logger = Logger.getLogger();
     private final ICardMoneyTransferService service;
 
-    public CardMoneyTransferController(CardMoneyTransferService transferService) {
+    public CardMoneyTransferController(CardMoneyTransferService transferService) throws IOException {
         this.service = transferService;
     }
 

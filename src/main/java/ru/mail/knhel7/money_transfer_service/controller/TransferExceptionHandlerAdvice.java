@@ -11,11 +11,16 @@ import ru.mail.knhel7.money_transfer_service.exception.TransferException;
 import ru.mail.knhel7.money_transfer_service.logger.Logger;
 import ru.mail.knhel7.money_transfer_service.model.http_response.TransferExResp;
 
+import java.io.IOException;
+
 
 @RestControllerAdvice
 public class TransferExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
     private final Logger logger = Logger.getLogger();
+
+    public TransferExceptionHandlerAdvice() throws IOException {
+    }
 
     @ExceptionHandler(TransferException.class)
     public ResponseEntity<TransferExResp> handlerTransfer(TransferException ex) {
