@@ -8,17 +8,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.mail.knhel7.money_transfer_service.exception.NotFoundEx;
 import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
 import ru.mail.knhel7.money_transfer_service.exception.TransferException;
+import ru.mail.knhel7.money_transfer_service.logger.Logger;
 import ru.mail.knhel7.money_transfer_service.model.http_response.TransferExResp;
 
 
 @RestControllerAdvice
 public class TransferExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
+    private final Logger logger = Logger.getLogger();
+
     @ExceptionHandler(TransferException.class)
     public ResponseEntity<TransferExResp> handlerTransfer(TransferException ex) {
         // logger(ex.getMessage());
         TransferExResp errResp = new TransferExResp(ex.getMessage());
-        System.out.println(errResp);
+        logger.logTransactionErr(errResp);
         return new ResponseEntity<>(errResp, HttpStatusCode.valueOf(400));
     }
 
@@ -26,7 +29,7 @@ public class TransferExceptionHandlerAdvice extends ResponseEntityExceptionHandl
     public ResponseEntity<TransferExResp> handlerCardNotFound(NotFoundEx ex) {
         // logger(ex.getMessage());
         TransferExResp errResp = new TransferExResp(ex.getMessage());
-        System.out.println(errResp);
+        logger.logTransactionErr(errResp);
         return new ResponseEntity<>(errResp, HttpStatusCode.valueOf(404));
     }
 
@@ -34,7 +37,7 @@ public class TransferExceptionHandlerAdvice extends ResponseEntityExceptionHandl
     public ResponseEntity<TransferExResp> handlerTransfer(OtherTransferEx ex) {
         // logger(ex.getMessage());
         TransferExResp errResp = new TransferExResp(ex.getMessage());
-        System.out.println(errResp);
+        logger.logTransactionErr(errResp);
         return new ResponseEntity<>(errResp, HttpStatusCode.valueOf(500));
     }
 

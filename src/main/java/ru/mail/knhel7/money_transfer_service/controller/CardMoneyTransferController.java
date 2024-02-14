@@ -42,7 +42,7 @@ public class CardMoneyTransferController {
     @PostMapping("confirmOperation")
     public ResponseEntity<TransferResponse> transferConfirm(@RequestBody @Validated TransferConfirm confirm) {
         Transaction<Transfer> transaction = service.transferConfirm(confirm);
-        logger.logTitle(transaction, "The transfer was confirmed");
+        logger.logTransactionTitle(transaction, "The transfer was confirmed");
         return ResponseEntity.ok(new TransferResponse(transaction.getID()));
     }
 }
