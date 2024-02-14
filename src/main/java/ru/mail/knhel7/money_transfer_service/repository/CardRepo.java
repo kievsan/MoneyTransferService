@@ -32,21 +32,21 @@ public class CardRepo implements ICardRepo{
         try {
             cards.put(sender.getNumber(), sender);
             cards.put(receiver.getNumber(), receiver);
-            transaction.setStatus(TransactionStatus.COMPLETED);
+            transaction.setStatus(TransactionStatus.EXECUTED);
             transactions.put(transaction.getID(), transaction);
         } catch (Exception ex) {
             throw new OtherTransferEx("Ошибка сервера: возможно нарушена целостность данных");
         }
     }
 
-    public Integer addTransaction(Transfer transfer) {
+    public Transaction<Transfer> addTransferTransaction(Transfer transfer) {
         Transaction<Transfer> transaction = new Transaction<>(transfer);
         try{
             transactions.put(transaction.getID(), transaction);
         } catch (Exception ex) {
             throw new OtherTransferEx("Ошибка сервера: возможно нарушена целостность данных");
         }
-        return transaction.getID();
+        return transaction;
     }
 
     public Transaction<?> delTransactionById(Integer id) {

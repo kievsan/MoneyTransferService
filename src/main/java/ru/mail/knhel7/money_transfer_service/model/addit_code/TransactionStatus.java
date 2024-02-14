@@ -17,6 +17,20 @@ public enum TransactionStatus {
         this.title = title;
     }
 
+    public String description() {
+        String description = switch (this) {
+            case NEW -> "NEW";
+            case REFUSED -> "REFUSED";
+            case DELETED -> "DELETED";
+            case ACCEPTED -> "ACCEPTED";
+            case EXECUTED -> "EXECUTED";
+            case REFUNDED -> "REFUNDED";
+            case COMPLETED -> "COMPLETED";
+            case ARCHIVED -> "ARCHIVED";
+        };
+        return description;
+    }
+
     @Override
     public String toString() {
         return title;

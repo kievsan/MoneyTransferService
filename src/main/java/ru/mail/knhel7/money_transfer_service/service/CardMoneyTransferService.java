@@ -9,6 +9,7 @@ import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.repository.CardRepo;
+import ru.mail.knhel7.money_transfer_service.repository.ICardRepo;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -16,14 +17,14 @@ import java.util.NoSuchElementException;
 @Service
 public class CardMoneyTransferService implements ICardMoneyTransferService {
 
-    private final CardRepo cardRepo;
+    private final ICardRepo cardRepo;
 
     public CardMoneyTransferService(CardRepo cardRepo) {
         this.cardRepo = cardRepo;
     }
 
     @Override
-    public Integer transferConfirm(TransferConfirm confirm) {
+    public Transaction<Transfer> transferConfirm(TransferConfirm confirm) {
         Transaction<Transfer> transaction = validateTransferID(confirm);
         Transfer transfer = transaction.getOperation();
 
@@ -33,15 +34,15 @@ public class CardMoneyTransferService implements ICardMoneyTransferService {
         Card receiver = validateReceiver(transfer);
         cardRepo.executeTransfer(transaction, sender, receiver);
 
-        return transaction.getID();
+        return transaction;
     }
 
     @Override
-    public Integer transferMoney(Transfer transfer) {
+    public Transaction<Transfer> transferMoney(Transfer transfer) {
         validateAmount(transfer);
         validateSender(transfer);
         validateReceiver(transfer);
-        return cardRepo.addTransaction(transfer);
+        return cardRepo.addTransferTransaction(transfer);
     }
 
     public Transaction<Transfer> validateTransferID(TransferConfirm confirm) {

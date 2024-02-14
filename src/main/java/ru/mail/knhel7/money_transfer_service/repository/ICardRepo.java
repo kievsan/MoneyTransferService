@@ -5,6 +5,7 @@ import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface ICardRepo {
@@ -13,7 +14,9 @@ public interface ICardRepo {
     Optional<Card> getCardByNumber(String number);
     List<Card> getAllCards();
     List<String> getAllCardNumbers();
+    Map<Integer, Transaction<?>> getTransactions();
     List<Transaction<?>> getTransactionList();
     Optional<Transaction<?>> getTransactionByID(int id);
+    Transaction<Transfer> addTransferTransaction(Transfer transfer);
     void executeTransfer(Transaction<Transfer> transaction, Card sender, Card receiver);
 }

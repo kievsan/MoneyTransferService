@@ -43,6 +43,8 @@ public class Transfer {
 
     @Override
     public String toString() {
-        return "Card №" + cardFromNumber + " ==> " + amount + " ==> Card №" + cardToNumber;
+        return "Card №" + cardFromNumber + " ==> " +
+                amount + " + " + setCommission() + ":" + feePercent + "%" +
+                " ==> Card №" + cardToNumber;
     }
 }

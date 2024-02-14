@@ -8,8 +8,8 @@ import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import java.util.List;
 
 public interface ICardMoneyTransferService {
-    Integer transferMoney(Transfer transfer);
-    Integer transferConfirm(TransferConfirm confirm);
+    Transaction<Transfer> transferMoney(Transfer transfer);
+    Transaction<Transfer> transferConfirm(TransferConfirm confirm);
     public List<Transaction<Transfer>> getTransferTransactionList();
     public List<Transfer> getTransferList();
     public List<Card> getAllCards();
