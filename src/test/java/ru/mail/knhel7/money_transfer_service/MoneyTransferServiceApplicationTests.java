@@ -46,7 +46,7 @@ class MoneyTransferServiceApplicationTests {
 			.withExposedPorts(PORT);
 
 	@Container
-	public final static GenericContainer<?> rest_transfer = new GenericContainer<>(PROJ + "-" + DockerImgName)
+	public static final GenericContainer<?> rest_transfer = new GenericContainer<>(PROJ + "-" + DockerImgName)
 			.withExposedPorts(PORT);
 
 	@Test
