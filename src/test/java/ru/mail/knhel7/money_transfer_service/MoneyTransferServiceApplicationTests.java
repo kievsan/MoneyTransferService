@@ -15,6 +15,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.mail.knhel7.money_transfer_service.model.Money;
 import ru.mail.knhel7.money_transfer_service.model.addit_code.Currency;
 import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
 
 import java.nio.file.Paths;
@@ -64,9 +65,26 @@ class MoneyTransferServiceApplicationTests {
 		assertEquals("1", transferResult(port, transfer));
 	}
 
+	@Test
+	void contextLoadsTransferConfirm() throws JSONException {	// ???	org.testcontainers.containers.ContainerFetchException: Can't get Docker image
+		TransferConfirm confirm = new TransferConfirm("1", "00");
+
+		final Integer port = rest_transfer.getMappedPort(PORT);
+		assertEquals("1", confirmResult(port, confirm));
+	}
+
 	String transferResult(Integer port, Transfer transfer) throws JSONException {
 		String URL = BaseURL + "/transfer";
 		ResponseEntity<TransferResponse> resp = testTemplate.postForEntity(URL, transfer, TransferResponse.class);
+		TransferResponse transferResponse = Objects.requireNonNull(resp.getBody());
+		final String result = new JSONObject(transferResponse.toString()).get("operationId").toString();
+		System.out.println(URL + " ==> operation ID = " + result);
+		return result;
+	}
+
+	String confirmResult(Integer port, TransferConfirm confirm) throws JSONException {
+		String URL = BaseURL + "/confirmOperation";
+		ResponseEntity<TransferResponse> resp = testTemplate.postForEntity(URL, confirm, TransferResponse.class);
 		TransferResponse transferResponse = Objects.requireNonNull(resp.getBody());
 		final String result = new JSONObject(transferResponse.toString()).get("operationId").toString();
 		System.out.println(URL + " ==> operation ID = " + result);

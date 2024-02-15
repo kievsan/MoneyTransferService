@@ -14,6 +14,10 @@ public class TransferConfirm {
 
     public TransferConfirm() {}
 
+    public TransferConfirm(String operationId, String code) {
+        this.operationId = operationId;
+        this.code = code;
+    }
 
     @Override
     public String toString() {
