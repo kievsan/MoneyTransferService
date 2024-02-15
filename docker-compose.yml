@@ -7,8 +7,9 @@ services:
   rest_transfer:
     build: ./
     ports:
+      - "5500:5500"
 #      - "8088"
-      - "5500:8088"
+#      - "5500:8088"
     networks:
       - backend
     deploy:
