@@ -13,9 +13,9 @@ REST-сервис работает на http://localhost:5500/transfer по POST
 2. Собрать архивный файл:
 #### mvn package
 3. Построить Docker image:
-#### docker build -t rest_transfer:latest
+#### docker build -t rest_transfer:latest .
 4. Запустить:
-#### docker-compose up
+#### docker compose up -d
 
 ---
 
