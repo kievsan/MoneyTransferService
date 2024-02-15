@@ -1,27 +1,23 @@
 package ru.mail.knhel7.money_transfer_service;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.ResponseEntity;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.images.builder.ImageFromDockerfile;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.nio.file.Paths;
+
 import ru.mail.knhel7.money_transfer_service.model.Money;
 import ru.mail.knhel7.money_transfer_service.model.addit_code.Currency;
 import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
-import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
 
-import java.nio.file.Paths;
-import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

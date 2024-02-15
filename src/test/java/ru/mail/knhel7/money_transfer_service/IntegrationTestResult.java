@@ -10,16 +10,11 @@ import ru.mail.knhel7.money_transfer_service.model.http_response.TransferRespons
 
 import java.util.Objects;
 
-@Getter
-@Setter
 public class IntegrationTestResult<R> {
-    private final String BaseURL = "http://localhost:5500";
-    private Integer port;
-    private String URI;
-    private R objRequest;
 
-    public IntegrationTestResult() {
-    }
+    private final R objRequest;
+    private final Integer port;
+    private final String URI;
 
     public IntegrationTestResult(R objRequest, Integer port, String URI) {
         this.objRequest = objRequest;
@@ -28,7 +23,7 @@ public class IntegrationTestResult<R> {
     }
 
     String result(TestRestTemplate testTemplate) throws JSONException {
-        String URL = BaseURL + URI;
+        String URL = "http://localhost:" + port + URI;
         ResponseEntity<TransferResponse> resp = testTemplate.postForEntity(URL, objRequest, TransferResponse.class);
         TransferResponse transferResponse = Objects.requireNonNull(resp.getBody());
         final String result = new JSONObject(transferResponse.toString()).get("operationId").toString();
