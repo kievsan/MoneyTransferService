@@ -15,9 +15,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.mail.knhel7.money_transfer_service.model.Money;
 import ru.mail.knhel7.money_transfer_service.model.addit_code.Currency;
 import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
 
 import java.nio.file.Paths;
 import java.util.Objects;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -26,7 +29,7 @@ class MoneyTransferServiceApplicationTests {
 	private static final String PROJ = "money_transfer_service";
 	private static final String HOST = "http://localhost";
 	private static final Integer PORT = 5500;
-	private static final String DockerImageName = "rest_transfer";
+	private static final String DockerImgName = "rest_transfer";
 
 	@Autowired
 	private TestRestTemplate testTemplate;
@@ -36,7 +39,7 @@ class MoneyTransferServiceApplicationTests {
 //	}
 
 	@Container
-	public final static GenericContainer<?> rest_transfer = new GenericContainer<>(DockerImageName)
+	public final static GenericContainer<?> rest_transfer = new GenericContainer<>(DockerImgName)
 			.withExposedPorts(PORT);
 
 	@Container
@@ -44,21 +47,30 @@ class MoneyTransferServiceApplicationTests {
 			.withFileFromPath(".", Paths.get("target"))
 			.withDockerfileFromBuilder(builder -> builder
 					.from("openjdk:21")
+					.volume("/tmp")
 					.expose(PORT)
-					.add(PROJ + "-0.0.1-SNAPSHOT.jar", DockerImageName + ".jar")
-					.entryPoint("java", "-jar", "/" + DockerImageName + ".jar")
+					.add(PROJ + "-0.0.1-SNAPSHOT.jar", DockerImgName + ".jar")
+					.entryPoint("java", "-jar", "/" + DockerImgName + ".jar")
 					.build()))
 			.withExposedPorts(PORT);
 
 	@Test
-	void contextLoadsTransfer() throws JSONException {	// ???
-		Transfer transfer = new Transfer("1234567890123456",
-				"02/34", "231", "9876543210654321", new Money(Currency.CNY, 3000));
-		ResponseEntity<Transfer> forTransfer = testTemplate.postForEntity(HOST + ":" + docker_container.getMappedPort(PORT) + "/transfer",
-				transfer, Transfer.class);
-		String expected = new JSONObject(Objects.requireNonNull(forTransfer.getBody()).toString())
-				.get("operationId").toString();
-		Assertions.assertEquals(expected, "1");
+	void contextLoadsTransfer() throws JSONException {	// ???	org.testcontainers.containers.ContainerFetchException: Can't get Docker image
+		Transfer transfer = new Transfer("1234567890123456", "02/34", "231",
+				"2345678901234561", new Money(Currency.RUR, 5000));
+
+		final Integer port = rest_transfer.getMappedPort(PORT);
+		assertEquals("1", transferResult(port, transfer));
+	}
+
+	String transferResult(Integer port, Transfer transfer) throws JSONException {
+		String targetURL = HOST + ":" + port + "/transfer";
+		ResponseEntity<Transfer> respTransfer = testTemplate.postForEntity(targetURL, transfer, Transfer.class);
+		final String result = new JSONObject(
+				Objects.requireNonNull(respTransfer.getBody()).toString()
+		).get("operationId").toString();
+		System.out.println(targetURL + ": operation ID = " + result);
+		return result;
 	}
 
 }

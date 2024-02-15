@@ -7,7 +7,7 @@ import ru.mail.knhel7.money_transfer_service.tools.DateTimeTool;
 
 
 @Getter
-public class Transaction<T> implements ITransaction{
+public class Transaction<T> implements ITransaction<T>{
 
     private static Integer Counter = 1;
 
