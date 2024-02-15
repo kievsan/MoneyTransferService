@@ -25,6 +25,7 @@ class MoneyTransferServiceApplicationTests {
 	private static final String PROJ = "money_transfer_service";
 	private static final Integer PORT = 5500;
 	private static final String DockerImgName = "rest_transfer";
+	private static final String DockerComposeContainer = "money_transfer_service-rest_transfer-1";
 
 	@Autowired
 	private TestRestTemplate testTemplate;
@@ -46,7 +47,7 @@ class MoneyTransferServiceApplicationTests {
 			.withExposedPorts(PORT);
 
 	@Container
-	public final static GenericContainer<?> rest_transfer = new GenericContainer<>(DockerImgName)
+	public final static GenericContainer<?> rest_transfer = new GenericContainer<>(DockerComposeContainer)
 			.withExposedPorts(PORT);
 
 	@Test
