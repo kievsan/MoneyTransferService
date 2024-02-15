@@ -62,7 +62,8 @@ class MoneyTransferServiceApplicationTests {
 				"2345678901234561", new Money(Currency.RUR, 5000));
 
 		final Integer port = rest_transfer.getMappedPort(PORT);
-		assertEquals("1", transferResult(port, transfer));
+		IntegrationTestResult<Transfer> transferTest = new IntegrationTestResult<>(transfer, port, "/transfer");
+		assertEquals("1", transferTest.result(testTemplate));
 	}
 
 	@Test
@@ -70,25 +71,8 @@ class MoneyTransferServiceApplicationTests {
 		TransferConfirm confirm = new TransferConfirm("1", "00");
 
 		final Integer port = rest_transfer.getMappedPort(PORT);
-		assertEquals("1", confirmResult(port, confirm));
-	}
-
-	String transferResult(Integer port, Transfer transfer) throws JSONException {
-		String URL = BaseURL + "/transfer";
-		ResponseEntity<TransferResponse> resp = testTemplate.postForEntity(URL, transfer, TransferResponse.class);
-		TransferResponse transferResponse = Objects.requireNonNull(resp.getBody());
-		final String result = new JSONObject(transferResponse.toString()).get("operationId").toString();
-		System.out.println(URL + " ==> operation ID = " + result);
-		return result;
-	}
-
-	String confirmResult(Integer port, TransferConfirm confirm) throws JSONException {
-		String URL = BaseURL + "/confirmOperation";
-		ResponseEntity<TransferResponse> resp = testTemplate.postForEntity(URL, confirm, TransferResponse.class);
-		TransferResponse transferResponse = Objects.requireNonNull(resp.getBody());
-		final String result = new JSONObject(transferResponse.toString()).get("operationId").toString();
-		System.out.println(URL + " ==> operation ID = " + result);
-		return result;
+		IntegrationTestResult<TransferConfirm> confirmTest = new IntegrationTestResult<>(confirm, port, "/confirmOperation");
+		assertEquals("1", confirmTest.result(testTemplate));
 	}
 
 }
