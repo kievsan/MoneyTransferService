@@ -55,7 +55,7 @@ class MoneyTransferServiceApplicationTests {
 			.withExposedPorts(PORT);
 
 	@Test
-	void contextLoadsTransfer() {	// ???	org.testcontainers.containers.ContainerFetchException: Can't get Docker image
+	void contextLoadsTransfer() throws JSONException {	// ???	org.testcontainers.containers.ContainerFetchException: Can't get Docker image
 		Transfer transfer = new Transfer("1234567890123456", "02/34", "231",
 				"2345678901234561", new Money(Currency.RUR, 5000));
 
