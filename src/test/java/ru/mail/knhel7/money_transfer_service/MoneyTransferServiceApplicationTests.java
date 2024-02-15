@@ -18,15 +18,12 @@ import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
 
 
-
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class MoneyTransferServiceApplicationTests {
 
 	private static final String PROJ = "money_transfer_service";
-	private static final String HOST = "http://localhost";
 	private static final Integer PORT = 5500;
-	private static final String BaseURL = HOST + ":" + PORT;
 	private static final String DockerImgName = "rest_transfer";
 
 	@Autowired
@@ -35,10 +32,6 @@ class MoneyTransferServiceApplicationTests {
 //	@Test
 //	void contextLoads() {
 //	}
-
-	@Container
-	public final static GenericContainer<?> rest_transfer = new GenericContainer<>(DockerImgName)
-			.withExposedPorts(PORT);
 
 	@Container
 	public static final GenericContainer<?> docker_container = new GenericContainer<>(new ImageFromDockerfile()
@@ -50,6 +43,10 @@ class MoneyTransferServiceApplicationTests {
 					.add(PROJ + "-0.0.1-SNAPSHOT.jar", DockerImgName + ".jar")
 					.entryPoint("java", "-jar", "/" + DockerImgName + ".jar")
 					.build()))
+			.withExposedPorts(PORT);
+
+	@Container
+	public final static GenericContainer<?> rest_transfer = new GenericContainer<>(DockerImgName)
 			.withExposedPorts(PORT);
 
 	@Test
