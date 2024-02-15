@@ -29,6 +29,7 @@ class MoneyTransferServiceApplicationTests {
 	private static final String PROJ = "money_transfer_service";
 	private static final String HOST = "http://localhost";
 	private static final Integer PORT = 5500;
+	private static final String BaseURL = HOST + ":" + PORT;
 	private static final String DockerImgName = "rest_transfer";
 
 	@Autowired
@@ -64,12 +65,11 @@ class MoneyTransferServiceApplicationTests {
 	}
 
 	String transferResult(Integer port, Transfer transfer) throws JSONException {
-		String targetURL = HOST + ":" + port + "/transfer";
-		ResponseEntity<Transfer> respTransfer = testTemplate.postForEntity(targetURL, transfer, Transfer.class);
-		final String result = new JSONObject(
-				Objects.requireNonNull(respTransfer.getBody()).toString()
-		).get("operationId").toString();
-		System.out.println(targetURL + ": operation ID = " + result);
+		String URL = BaseURL + "/transfer";
+		ResponseEntity<TransferResponse> respTransfer = testTemplate.postForEntity(URL, transfer, TransferResponse.class);
+		TransferResponse body = Objects.requireNonNull(respTransfer.getBody());
+		final String result = new JSONObject(body.toString()).get("operationId").toString();
+		System.out.println(URL + " ==> operation ID = " + result);
 		return result;
 	}
 
