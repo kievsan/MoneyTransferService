@@ -66,9 +66,9 @@ class MoneyTransferServiceApplicationTests {
 
 	String transferResult(Integer port, Transfer transfer) throws JSONException {
 		String URL = BaseURL + "/transfer";
-		ResponseEntity<TransferResponse> respTransfer = testTemplate.postForEntity(URL, transfer, TransferResponse.class);
-		TransferResponse body = Objects.requireNonNull(respTransfer.getBody());
-		final String result = new JSONObject(body.toString()).get("operationId").toString();
+		ResponseEntity<TransferResponse> resp = testTemplate.postForEntity(URL, transfer, TransferResponse.class);
+		TransferResponse transferResponse = Objects.requireNonNull(resp.getBody());
+		final String result = new JSONObject(transferResponse.toString()).get("operationId").toString();
 		System.out.println(URL + " ==> operation ID = " + result);
 		return result;
 	}
