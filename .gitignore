@@ -6,6 +6,7 @@ target/
 
 out/
 *.log
+.mvn/wrapper/
 
 ### STS ###
 .apt_generated

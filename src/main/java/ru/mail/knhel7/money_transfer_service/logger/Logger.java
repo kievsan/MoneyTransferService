@@ -24,14 +24,18 @@ public class Logger {
     private Logger() {}
 
 
-    public static Logger getLogger() throws IOException {
+    public static Logger getLogger() {
         if (instance == null) {
             instance = new Logger();
             instance.logFile = new File("./" + instance.filePath);
-            if (instance.logFile.createNewFile()) {
-                instance.logMessage("Создан " + instance.filePath);
-            } else {
-                instance.logMessage("Найден " + instance.filePath);
+            try {
+                if (instance.logFile.createNewFile()) {
+                    instance.logMessage("Создан " + instance.filePath);
+                } else {
+                    instance.logMessage("Найден " + instance.filePath);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         };
         return instance;

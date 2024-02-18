@@ -1,6 +1,5 @@
 package ru.mail.knhel7.money_transfer_service.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +14,9 @@ import ru.mail.knhel7.money_transfer_service.service.ICardMoneyTransferService;
 import java.io.IOException;
 import java.util.List;
 
-
 @CrossOrigin(origins = "${client.url}")
 @RestController
-@RequestMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/")
 public class CardMoneyTransferController {
 
     private final Logger logger = Logger.getLogger();
@@ -35,10 +33,10 @@ public class CardMoneyTransferController {
         return ResponseEntity.ok(new TransferResponse(transaction.getID()));
     }
 
-    @GetMapping("transfer")
-    public List<Transfer> getListTransfers() {
-        return service.getTransferList();
-    }
+//    @GetMapping("transfer")
+//    public List<Transfer> getListTransfers() {
+//        return service.getTransferList();
+//    }
 
     @PostMapping("confirmOperation")
     public ResponseEntity<TransferResponse> transferConfirm(@RequestBody @Validated TransferConfirm confirm) {
