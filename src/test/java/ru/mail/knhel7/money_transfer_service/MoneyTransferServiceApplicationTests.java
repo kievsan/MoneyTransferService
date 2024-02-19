@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.nio.file.Paths;
 
 import ru.mail.knhel7.money_transfer_service.model.Money;
-import ru.mail.knhel7.money_transfer_service.model.addit_code.Currency;
 import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
 
@@ -52,7 +51,7 @@ class MoneyTransferServiceApplicationTests {
 	@Test
 	void contextLoadsTransfer() throws JSONException {	// ???	org.testcontainers.containers.ContainerFetchException: Can't get Docker image
 		Transfer transfer = new Transfer("1234567890123456", "02/34", "231",
-				"2345678901234561", new Money(Currency.RUR, 5000));
+				"2345678901234561", new Money(5000));
 
 		final Integer port = rest_transfer.getMappedPort(PORT);
 		IntegrationTestResult<Transfer> transferTest = new IntegrationTestResult<>(transfer, port, "/transfer");

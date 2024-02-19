@@ -1,13 +1,11 @@
 package ru.mail.knhel7.money_transfer_service.model.http_request;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import ru.mail.knhel7.money_transfer_service.model.Money;
-import ru.mail.knhel7.money_transfer_service.model.addit_code.Currency;
 
 @Getter
 @Setter

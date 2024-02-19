@@ -8,11 +8,10 @@ import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
+import ru.mail.knhel7.money_transfer_service.service.CardMoneyTransferServiceImpl;
 import ru.mail.knhel7.money_transfer_service.service.CardMoneyTransferService;
-import ru.mail.knhel7.money_transfer_service.service.ICardMoneyTransferService;
 
 import java.io.IOException;
-import java.util.List;
 
 @CrossOrigin(origins = "${client.url}")
 @RestController
@@ -20,9 +19,9 @@ import java.util.List;
 public class CardMoneyTransferController {
 
     private final Logger logger = Logger.getLogger();
-    private final ICardMoneyTransferService service;
+    private final CardMoneyTransferService service;
 
-    public CardMoneyTransferController(CardMoneyTransferService transferService) throws IOException {
+    public CardMoneyTransferController(CardMoneyTransferServiceImpl transferService) throws IOException {
         this.service = transferService;
     }
 

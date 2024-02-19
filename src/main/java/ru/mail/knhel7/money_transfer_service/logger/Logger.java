@@ -52,8 +52,7 @@ public class Logger {
     public String getLogTransactionTitle(Transaction<?> transaction, String title) {
         return getLogID() + " " +
                 (title.isEmpty() ? title : title + ": №") +
-                transaction.getID() + "-" +
-                transaction.getStatus().description();
+                transaction.getID();
     }
 
     public void logTransaction(Transaction<?> transaction, String title) {

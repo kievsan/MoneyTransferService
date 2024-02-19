@@ -1,10 +1,10 @@
-package ru.mail.knhel7.money_transfer_service.tools;
+package ru.mail.knhel7.money_transfer_service.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class DateTimeTool {
+public class DateTimeUtil {
 
     public static String getDate() {
         return DateTimeFormatter.ofPattern("yy-MM-d").format(LocalDateTime.now());
