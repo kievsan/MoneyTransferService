@@ -1,6 +1,7 @@
 package ru.mail.knhel7.money_transfer_service.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
 import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
@@ -27,6 +28,9 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
     private final AtomicInteger id = new AtomicInteger(1);
     private final AtomicInteger logHttpId = new AtomicInteger(1);
 
+    @Value("${server.port}")
+    private String port;
+
     final LoggerAssistant logger = new LoggerAssistant();
 
     private Integer nextID() {
@@ -43,9 +47,10 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
         transaction.setComment(msg.get("Accept") + " " + DateTimeUtil.timestamp());
         try {
             transactions.put(transaction.getId(), transaction);
-            log.info("{}", logger.logTransaction(nextLogHttpID(), transaction, "The transfer was confirmed"));
+            log.info("[{}: HTTP {}] {}", port, nextLogHttpID(),
+                    logger.logTransaction(transaction, "The transfer was confirmed"));
         } catch (Exception ex) {
-            throw new OtherTransferEx(msg.get("TransferFail"));
+            throw new OtherTransferEx("HTTP " + port + ": " + msg.get("TransferFail"));
         }
     }
 
@@ -54,7 +59,8 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
         Transaction<Transfer> transaction = new Transaction<>(transfer, nextID());
         try{
             transactions.put(transaction.getId(), transaction);
-            log.info("{}", logger.logTransaction(nextLogHttpID(), transaction, "The transfer was received"));
+            log.info("[{}: HTTP {}] {}", port, nextLogHttpID(),
+                    logger.logTransaction(transaction, "The transfer was received"));
         } catch (Exception ex) {
             throw new OtherTransferEx(msg.get("TransferFail"));
         }

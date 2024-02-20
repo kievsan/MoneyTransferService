@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoggerAssistant {
 
-    public String getLogTransactionTitle(int id, Transaction<?> transaction, String title) {
+    public String getLogTransactionTitle(Transaction<?> transaction, String title) {
         return (title.isEmpty() ? title : title + ": №") + transaction.getId();
     }
 
-    public String logTransaction(Integer id, Transaction<?> transaction, String title) {
-        return getLogTransactionTitle(id, transaction, title) + " ==> " + transaction.getOperation();
+    public String logTransaction(Transaction<?> transaction, String title) {
+        return getLogTransactionTitle(transaction, title) + " ==> " + transaction.getOperation();
     }
 }
