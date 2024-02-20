@@ -25,11 +25,17 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
     }
 
     private final AtomicInteger id = new AtomicInteger(1);
-    private final Integer ID = id.getAndIncrement();
     private final AtomicInteger logHttpId = new AtomicInteger(1);
-    private final Integer logHttpID = logHttpId.getAndIncrement();
 
     final LoggerAssistant logger = new LoggerAssistant();
+
+    private Integer nextID() {
+        return id.getAndIncrement();
+    }
+
+    private Integer nextLogHttpID() {
+        return logHttpId.getAndIncrement();
+    }
 
     @Override
     public void executeTransfer(Transaction<Transfer> transaction) {
@@ -37,7 +43,7 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
         transaction.setComment(msg.get("Accept") + " " + DateTimeUtil.timestamp());
         try {
             transactions.put(transaction.getId(), transaction);
-            log.info("{}", logger.logTransaction(logHttpID, transaction, "The transfer was confirmed"));
+            log.info("{}", logger.logTransaction(nextLogHttpID(), transaction, "The transfer was confirmed"));
         } catch (Exception ex) {
             throw new OtherTransferEx(msg.get("TransferFail"));
         }
@@ -45,10 +51,10 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
 
     @Override
     public Transaction<Transfer> addTransferTransaction(Transfer transfer) {
-        Transaction<Transfer> transaction = new Transaction<>(transfer, ID);
+        Transaction<Transfer> transaction = new Transaction<>(transfer, nextID());
         try{
             transactions.put(transaction.getId(), transaction);
-            log.info("{}", logger.logTransaction(logHttpID, transaction, "The transfer was received"));
+            log.info("{}", logger.logTransaction(nextLogHttpID(), transaction, "The transfer was received"));
         } catch (Exception ex) {
             throw new OtherTransferEx(msg.get("TransferFail"));
         }
