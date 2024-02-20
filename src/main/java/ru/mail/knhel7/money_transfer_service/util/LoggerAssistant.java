@@ -7,14 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoggerAssistant {
 
-    public String getLogID(int id) {
-        return "[" + DateTimeUtil.timestamp() + ", " + id + "]";
-    }
-
     public String getLogTransactionTitle(int id, Transaction<?> transaction, String title) {
-        return getLogID(id) + " " +
-                (title.isEmpty() ? title : title + ": №") +
-                transaction.getId();
+        return (title.isEmpty() ? title : title + ": №") + transaction.getId();
     }
 
     public String logTransaction(Integer id, Transaction<?> transaction, String title) {

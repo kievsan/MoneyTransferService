@@ -10,7 +10,6 @@ import ru.mail.knhel7.money_transfer_service.exception.NotFoundEx;
 import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
 import ru.mail.knhel7.money_transfer_service.exception.TransferException;
 import ru.mail.knhel7.money_transfer_service.model.http_response.TransferExResp;
-import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
 
 @Slf4j
 @RestControllerAdvice
@@ -18,7 +17,7 @@ public class TransferExceptionHandlerAdvice extends ResponseEntityExceptionHandl
 
     public TransferExResp errResp(Exception ex) {
         TransferExResp errResp = new TransferExResp(ex.getMessage());
-        log.info("[{}, err] {}", DateTimeUtil.timestamp(), errResp);
+        log.info("[Transfer error] {}", errResp);
         return errResp;
     }
 

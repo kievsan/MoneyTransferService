@@ -27,9 +27,4 @@ public class CardMoneyTransferController {
     public ResponseEntity<TransferResponse> transferConfirm(@RequestBody @Validated TransferConfirm confirm) {
         return service.transferConfirm(confirm);
     }
-
-//    @GetMapping("transfer")
-//    public List<Transfer> getListTransfers() {
-//        return service.getTransferList();
-//    }
 }
