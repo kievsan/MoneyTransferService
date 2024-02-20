@@ -1,8 +1,10 @@
 package ru.mail.knhel7.money_transfer_service.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
+import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.repository.CardMoneyTransactionsRepoImpl;
 import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
@@ -22,17 +24,18 @@ public class CardMoneyTransferServiceImpl implements TransferService {
     }
 
     @Override
-    public Transaction<Transfer> transferConfirm(TransferConfirm confirm) {
+    public ResponseEntity<TransferResponse> transferConfirm(TransferConfirm confirm) {
         Transaction<Transfer> transaction = validator.validateTransferID(confirm);
         validator.validateAmount(transaction.getOperation());
         repo.executeTransfer(transaction);
-        return transaction;
+        return ResponseEntity.ok(new TransferResponse(transaction.getId()));
     }
 
     @Override
-    public Transaction<Transfer> transferMoney(Transfer transfer) {
+    public ResponseEntity<TransferResponse> transferMoney(Transfer transfer) {
         validator.validateAmount(transfer);
-        return repo.addTransferTransaction(transfer);
+        Transaction<Transfer> transaction = repo.addTransferTransaction(transfer);
+        return ResponseEntity.ok(new TransferResponse(transaction.getId()));
     }
 
     @Override

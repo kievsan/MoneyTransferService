@@ -2,6 +2,7 @@ package ru.mail.knhel7.money_transfer_service.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class DateTimeUtil {
 
@@ -14,7 +15,14 @@ public class DateTimeUtil {
     }
 
     public static String timestamp() {
-        return DateTimeUtil.getDate() + " " + DateTimeUtil.getTime();
+        return getDate() + " " + getTime();
     }
 
+    public String timestampExample2() {
+        return String.format("%1$td.%1$tm.%1$tY %tT", new Date());
+    }
+
+    public String timestampExample3() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+    }
 }

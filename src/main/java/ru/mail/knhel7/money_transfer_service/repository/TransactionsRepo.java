@@ -9,7 +9,6 @@ import java.util.Optional;
 public interface TransactionsRepo {
     void executeTransfer(Transaction<Transfer> transaction);
     Transaction<Transfer> addTransferTransaction(Transfer transfer);
-    Integer getId();
     Optional<Transaction<?>> getTransactionByID(int id);
     Map<Integer, Transaction<?>> getTransactions();
 }
