@@ -11,7 +11,7 @@ import ru.mail.knhel7.money_transfer_service.validation.Validator;
 import java.util.List;
 
 @Service
-public class CardMoneyTransferServiceImpl implements CardMoneyTransferService {
+public class CardMoneyTransferServiceImpl implements TransferService {
 
     private final TransactionsRepo repo;
     private final Validator validator;

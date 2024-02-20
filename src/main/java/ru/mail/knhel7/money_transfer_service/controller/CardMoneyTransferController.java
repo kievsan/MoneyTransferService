@@ -9,7 +9,7 @@ import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.service.CardMoneyTransferServiceImpl;
-import ru.mail.knhel7.money_transfer_service.service.CardMoneyTransferService;
+import ru.mail.knhel7.money_transfer_service.service.TransferService;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ import java.io.IOException;
 public class CardMoneyTransferController {
 
     private final Logger logger = Logger.getLogger();
-    private final CardMoneyTransferService service;
+    private final TransferService service;
 
     public CardMoneyTransferController(CardMoneyTransferServiceImpl transferService) throws IOException {
         this.service = transferService;

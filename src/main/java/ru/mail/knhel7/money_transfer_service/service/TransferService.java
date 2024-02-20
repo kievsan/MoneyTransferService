@@ -6,7 +6,7 @@ import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 
 import java.util.List;
 
-public interface CardMoneyTransferService {
+public interface TransferService {
     Transaction<Transfer> transferMoney(Transfer transfer);
     Transaction<Transfer> transferConfirm(TransferConfirm confirm);
     public List<Transaction<Transfer>> getTransferTransactionList();

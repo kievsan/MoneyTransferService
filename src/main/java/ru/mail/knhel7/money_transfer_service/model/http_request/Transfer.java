@@ -22,7 +22,6 @@ public class Transfer {
     Money commission;
 
     public Transfer() {
-
     }
 
     public Transfer(String cardFromNumber, String cardFromValidTill, String cardFromCVV, String cardToNumber, Money amount) {

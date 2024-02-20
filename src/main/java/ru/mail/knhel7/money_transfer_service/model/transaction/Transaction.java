@@ -4,9 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-
 @Getter
 public class Transaction<T> {
 
