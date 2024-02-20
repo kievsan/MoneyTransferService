@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
-import ru.mail.knhel7.money_transfer_service.repository.CardRepoImpl;
-import ru.mail.knhel7.money_transfer_service.repository.CardRepo;
+import ru.mail.knhel7.money_transfer_service.repository.CardMoneyTransactionsRepoImpl;
+import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
 import ru.mail.knhel7.money_transfer_service.validation.Validator;
 
 import java.util.List;
@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 public class CardMoneyTransferServiceImpl implements CardMoneyTransferService {
 
-    private final CardRepo cardRepo;
+    private final TransactionsRepo cardRepo;
     private final Validator validator;
 
-    public CardMoneyTransferServiceImpl(CardRepoImpl cardRepoImpl) {
+    public CardMoneyTransferServiceImpl(CardMoneyTransactionsRepoImpl cardRepoImpl) {
         this.cardRepo = cardRepoImpl;
         this.validator = new Validator(cardRepo);
     }

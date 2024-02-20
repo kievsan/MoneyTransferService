@@ -29,7 +29,7 @@ public class CardMoneyTransferController {
     public ResponseEntity<TransferResponse> transferMoney(@RequestBody @Validated Transfer transfer) {
         Transaction<Transfer> transaction = service.transferMoney(transfer);
         logger.logTransaction(transaction, "The transfer was received");
-        return ResponseEntity.ok(new TransferResponse(transaction.getID()));
+        return ResponseEntity.ok(new TransferResponse(transaction.getId()));
     }
 
 //    @GetMapping("transfer")
@@ -41,6 +41,6 @@ public class CardMoneyTransferController {
     public ResponseEntity<TransferResponse> transferConfirm(@RequestBody @Validated TransferConfirm confirm) {
         Transaction<Transfer> transaction = service.transferConfirm(confirm);
         logger.logTransactionTitle(transaction, "The transfer was confirmed");
-        return ResponseEntity.ok(new TransferResponse(transaction.getID()));
+        return ResponseEntity.ok(new TransferResponse(transaction.getId()));
     }
 }

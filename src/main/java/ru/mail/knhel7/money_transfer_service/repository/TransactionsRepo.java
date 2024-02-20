@@ -6,9 +6,10 @@ import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import java.util.Map;
 import java.util.Optional;
 
-public interface CardRepo {
+public interface TransactionsRepo {
     void executeTransfer(Transaction<Transfer> transaction);
     Transaction<Transfer> addTransferTransaction(Transfer transfer);
-    Map<Integer, Transaction<?>> getTransactions();
+    Integer getId();
     Optional<Transaction<?>> getTransactionByID(int id);
+    Map<Integer, Transaction<?>> getTransactions();
 }
