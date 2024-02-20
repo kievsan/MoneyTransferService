@@ -12,7 +12,7 @@
 - ответ: согласен, в финальной версии не останется. Просто мне было удобно на определенном этапе разработки для моментальной проверки.
 
 4. https://github.com/kievsan/MoneyTransferService/blob/2c73946e8f393f64587adb491fb5332b736c3329/src/main/java/ru/mail/knhel7/money_transfer_service/controller/CardMoneyTransferController.java#L33 - а почему бы сразу не вернуть из сервиса объект TransferResponse? И ниже аналогично.
-- ответ: ? объект Transaction<Transfer> transaction необходим моему логгеру. Этот вопрос перекликается с вопросом 8 (см. ниже)
+- ответ: Исправлено. Объект Transaction<Transfer> transaction был необходим моему логгеру. Этот вопрос перекликается с вопросом 8 (см. ниже)
 
 5. https://github.com/kievsan/MoneyTransferService/blob/2c73946e8f393f64587adb491fb5332b736c3329/src/main/java/ru/mail/knhel7/money_transfer_service/controller/CardMoneyTransferController.java#L18 - лишняя строка.
 - ответ: исправлено
@@ -21,10 +21,10 @@
 - ответ: это не так, возвращаю объект TransferExResp errResp с полями message и id cогласно спецификации
 
 7. https://github.com/kievsan/MoneyTransferService/blob/2c73946e8f393f64587adb491fb5332b736c3329/src/main/java/ru/mail/knhel7/money_transfer_service/controller/TransferExceptionHandlerAdvice.java#L22 - для чего используете?
-- ответ: из-за trows Exception в logger был добавлен айдишкой
+- ответ: из-за trows Exception в logger был добавлен айдишкой. Удалено (см. п.8)
 
 8. https://github.com/kievsan/MoneyTransferService/blob/master/src/main/java/ru/mail/knhel7/money_transfer_service/logger/Logger.java - логгер не является потокобезопасным. ... Я рекомендую использовать готовые реализации логгеров, так как они обеспечивают высокую производительность, поддерживаются сообществом разработчиков и имеют встроенные механизмы для обеспечения безопасности и конфигурирования. Например Logback или Log4j.
-- ответ: ? изучается. Я с самого начала спрашивал про параллельность, соблюдать ли потокобезопасность, подразумевая и этот момент тоже.
+- ответ: исправлено (Log4j). Я с самого начала спрашивал про параллельность, соблюдать ли потокобезопасность, подразумевая и этот момент тоже.
 
 список-2
 ----------
@@ -42,7 +42,7 @@
 - ответ: исполнено
 
 5. https://github.com/kievsan/MoneyTransferService/blob/2c73946e8f393f64587adb491fb5332b736c3329/src/main/java/ru/mail/knhel7/money_transfer_service/model/transaction/Transaction.java#L12-L14 - потокобезопасность с таким подходом не гарантируется. Я бы рекомендовал id транзакции получать в другом месте, а тут его просто сетить, типа того что вы делали в дз по спрингу.
-- ответ: ? исправлено и изучается
+- ответ: исправлено
 
 6. https://github.com/kievsan/MoneyTransferService/blob/2c73946e8f393f64587adb491fb5332b736c3329/src/main/java/ru/mail/knhel7/money_transfer_service/repository/CardRepo.java#L19-L26 - в этих картах нет необходимости. Для чего они тут?
 - ответ: удалено (см. пункт 2)

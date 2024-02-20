@@ -8,8 +8,6 @@ import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
 import ru.mail.knhel7.money_transfer_service.service.TransferService;
 
-import java.util.List;
-
 @CrossOrigin(origins = "${client.url}")
 @RestController
 @RequestMapping("/")
@@ -30,8 +28,8 @@ public class CardMoneyTransferController {
         return service.transferConfirm(confirm);
     }
 
-    @GetMapping("transfer")
-    public List<Transfer> getListTransfers() {
-        return service.getTransferList();
-    }
+//    @GetMapping("transfer")
+//    public List<Transfer> getListTransfers() {
+//        return service.getTransferList();
+//    }
 }
