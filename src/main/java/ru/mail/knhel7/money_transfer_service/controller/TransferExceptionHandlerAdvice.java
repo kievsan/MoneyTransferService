@@ -16,25 +16,24 @@ import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
 @RestControllerAdvice
 public class TransferExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(TransferException.class)
-    public ResponseEntity<TransferExResp> handlerTransfer(TransferException ex) {
+    public TransferExResp errResp(Exception ex) {
         TransferExResp errResp = new TransferExResp(ex.getMessage());
         log.info("[{}, err] {}", DateTimeUtil.timestamp(), errResp);
-        return new ResponseEntity<>(errResp, HttpStatusCode.valueOf(400));
+        return errResp;
+    }
+
+    @ExceptionHandler(TransferException.class)
+    public ResponseEntity<TransferExResp> handlerTransfer(TransferException ex) {
+        return new ResponseEntity<>(errResp(ex), HttpStatusCode.valueOf(400));
     }
 
     @ExceptionHandler(NotFoundEx.class)
-    public ResponseEntity<TransferExResp> handlerCardNotFound(NotFoundEx ex) {
-        TransferExResp errResp = new TransferExResp(ex.getMessage());
-        log.info("[{}, err] {}", DateTimeUtil.timestamp(), errResp);
-        return new ResponseEntity<>(errResp, HttpStatusCode.valueOf(404));
+    public ResponseEntity<TransferExResp> handlerNotFound(NotFoundEx ex) {
+        return new ResponseEntity<>(errResp(ex), HttpStatusCode.valueOf(404));
     }
 
     @ExceptionHandler(OtherTransferEx.class)
     public ResponseEntity<TransferExResp> handlerTransfer(OtherTransferEx ex) {
-        TransferExResp errResp = new TransferExResp(ex.getMessage());
-        log.info("[{}, err] {}", DateTimeUtil.timestamp(), errResp);
-        return new ResponseEntity<>(errResp, HttpStatusCode.valueOf(500));
+        return new ResponseEntity<>(errResp(ex), HttpStatusCode.valueOf(500));
     }
-
 }
