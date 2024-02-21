@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
-import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
 import ru.mail.knhel7.money_transfer_service.util.LoggerAssistant;

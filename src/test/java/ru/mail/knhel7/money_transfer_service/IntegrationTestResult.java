@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
-import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_response.TransferResponse;
 
 import java.util.Objects;
 

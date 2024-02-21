@@ -1,9 +1,9 @@
-package ru.mail.knhel7.money_transfer_service.validation;
+package ru.mail.knhel7.money_transfer_service.validator;
 
 import ru.mail.knhel7.money_transfer_service.exception.NotFoundEx;
 import ru.mail.knhel7.money_transfer_service.exception.TransferException;
-import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
-import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
 

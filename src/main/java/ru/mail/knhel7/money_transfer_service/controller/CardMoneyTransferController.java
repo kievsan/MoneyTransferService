@@ -3,9 +3,9 @@ package ru.mail.knhel7.money_transfer_service.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
-import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
-import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.TransferConfirm;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_response.TransferResponse;
 import ru.mail.knhel7.money_transfer_service.service.TransferService;
 
 @CrossOrigin(origins = "${client.url}")

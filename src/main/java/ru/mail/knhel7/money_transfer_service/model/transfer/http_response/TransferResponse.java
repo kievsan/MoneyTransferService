@@ -1,4 +1,4 @@
-package ru.mail.knhel7.money_transfer_service.model.http_response;
+package ru.mail.knhel7.money_transfer_service.model.transfer.http_response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

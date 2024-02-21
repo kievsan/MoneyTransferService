@@ -2,13 +2,13 @@ package ru.mail.knhel7.money_transfer_service.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
-import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
-import ru.mail.knhel7.money_transfer_service.model.http_response.TransferResponse;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.TransferConfirm;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_response.TransferResponse;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.repository.CardMoneyTransactionsRepoImpl;
 import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
-import ru.mail.knhel7.money_transfer_service.validation.CardMoneyTransferValidator;
+import ru.mail.knhel7.money_transfer_service.validator.CardMoneyTransferValidator;
 
 import java.util.List;
 

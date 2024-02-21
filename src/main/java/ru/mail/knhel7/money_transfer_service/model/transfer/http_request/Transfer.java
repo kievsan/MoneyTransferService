@@ -1,8 +1,5 @@
-package ru.mail.knhel7.money_transfer_service.model.http_request;
+package ru.mail.knhel7.money_transfer_service.model.transfer.http_request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import ru.mail.knhel7.money_transfer_service.model.Money;

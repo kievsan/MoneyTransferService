@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.mail.knhel7.money_transfer_service.exception.NotFoundEx;
 import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
 import ru.mail.knhel7.money_transfer_service.exception.TransferException;
-import ru.mail.knhel7.money_transfer_service.model.http_response.TransferExResp;
+import ru.mail.knhel7.money_transfer_service.model.transfer.http_response.TransferExResp;
 
 @Slf4j
 @RestControllerAdvice
