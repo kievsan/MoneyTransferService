@@ -9,11 +9,11 @@ import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
 
 import java.time.LocalDateTime;
 
-public class Validator {
+public class CardMoneyTransferValidator {
 
     private final TransactionsRepo transactionsRepo;
 
-    public Validator(TransactionsRepo transactionsRepo) {
+    public CardMoneyTransferValidator(TransactionsRepo transactionsRepo) {
         this.transactionsRepo = transactionsRepo;
     }
 

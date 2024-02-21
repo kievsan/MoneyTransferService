@@ -8,7 +8,7 @@ import ru.mail.knhel7.money_transfer_service.model.http_response.TransferRespons
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.repository.CardMoneyTransactionsRepoImpl;
 import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
-import ru.mail.knhel7.money_transfer_service.validation.Validator;
+import ru.mail.knhel7.money_transfer_service.validation.CardMoneyTransferValidator;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ import java.util.List;
 public class CardMoneyTransferServiceImpl implements TransferService {
 
     private final TransactionsRepo repo;
-    private final Validator validator;
+    private final CardMoneyTransferValidator validator;
 
     public CardMoneyTransferServiceImpl(CardMoneyTransactionsRepoImpl repo) {
         this.repo = repo;
-        this.validator = new Validator(repo);
+        this.validator = new CardMoneyTransferValidator(repo);
     }
 
     @Override
