@@ -6,6 +6,11 @@ import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
+import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
+
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Validator {
 
@@ -18,7 +23,7 @@ public class Validator {
     public Transaction<Transfer> validateTransferConfirm(TransferConfirm confirm) {
         String err = "Перевод №" + confirm.getOperationId() + " не подтвержден";
         if (isValidTransferConfirm(confirm)) {
-            throw new NotFoundEx(err);
+            throw new NotFoundEx(err + " из-за ошибок!");
         }
         try {
             int ID = Integer.parseInt(confirm.getOperationId());
@@ -54,8 +59,8 @@ public class Validator {
         if (transfer.getCardFromCVV() == null || transfer.getCardFromCVV().length() != 3) {
             throw new TransferException("Ошибка в коде CVV карты отправителя: должно быть 3 цифры!");
         }
-        if (transfer.getCardFromValidTill() == null || transfer.getCardFromValidTill().length() != 5) {
-            throw new TransferException("Ошибка в дате: должно быть 5 знаков!");
+        if (isBadDate(transfer.getCardFromValidTill())) {
+            throw new TransferException("Некорректная дата! Ожидается в формате 'mm/YY'");
         }
         if (isOverdueDate(transfer.getCardFromValidTill())) {
             throw new TransferException("Карта отправителя просрочена!");
@@ -63,6 +68,22 @@ public class Validator {
     }
 
     private boolean isOverdueDate(String d) {
-        return false;
+        LocalDateTime now = LocalDateTime.now();
+        return 2000 + convert(d.substring(3, 5)) < now.getYear() ||
+                2000 + convert(d.substring(3, 5)) == now.getYear() && convert(d) < now.getMonthValue();
+    }
+
+    private boolean isBadDate(String d) {
+        return d.length() != 5 || d.indexOf("/") != 2 ||
+                convert(d) < 1 || convert(d) > 12 ||
+                convert(d.substring(3, 5)) < 0;
+    }
+
+    private Integer convert(String num2Char) {
+        try {
+            return Integer.parseInt(num2Char.trim().substring(0, 2));
+        } catch (Exception ex) {
+            throw new TransferException("Ошибка в дате: месяц или год - не числа!");
+        }
     }
 }
