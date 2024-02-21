@@ -25,15 +25,15 @@ public class CardMoneyTransferServiceImpl implements TransferService {
 
     @Override
     public ResponseEntity<TransferResponse> transferConfirm(TransferConfirm confirm) {
-        Transaction<Transfer> transaction = validator.validateTransferID(confirm);
-        validator.validateAmount(transaction.getOperation());
+        Transaction<Transfer> transaction = validator.validateTransferConfirm(confirm);
+        validator.validateTransferMoney(transaction.getOperation());
         repo.executeTransfer(transaction);
         return ResponseEntity.ok(new TransferResponse(transaction.getId()));
     }
 
     @Override
     public ResponseEntity<TransferResponse> transferMoney(Transfer transfer) {
-        validator.validateAmount(transfer);
+        validator.validateTransferMoney(transfer);
         Transaction<Transfer> transaction = repo.addTransferTransaction(transfer);
         return ResponseEntity.ok(new TransferResponse(transaction.getId()));
     }

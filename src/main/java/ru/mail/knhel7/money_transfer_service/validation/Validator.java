@@ -15,8 +15,11 @@ public class Validator {
         this.transactionsRepo = transactionsRepo;
     }
 
-    public Transaction<Transfer> validateTransferID(TransferConfirm confirm) {
+    public Transaction<Transfer> validateTransferConfirm(TransferConfirm confirm) {
         String err = "Перевод №" + confirm.getOperationId() + " не подтвержден: не найден...";
+        if (isValidTransferConfirm(confirm)) {
+            throw new NotFoundEx(err);
+        }
         try {
             int ID = Integer.parseInt(confirm.getOperationId());
             return (Transaction<Transfer>) transactionsRepo.getTransactionByID(ID).get();
@@ -25,10 +28,20 @@ public class Validator {
         }
     }
 
-    public void validateAmount(Transfer transfer) {
+    public static boolean isValidTransferConfirm(TransferConfirm confirm) {
+        if (confirm == null) {
+            return false;
+        }
+        if (confirm.getCode() == null || confirm.getCode().length() != 4) {
+            return false;
+        }
+        return confirm.getOperationId() != null;
+    }
+
+    public void validateTransferMoney(Transfer transfer) {
         if (transfer.getAmount().value() <= 0) {
             throw new TransferException("Перевод отрицательной/нулевой суммы не предусмотрен!");
         }
-    }
 
+    }
 }
