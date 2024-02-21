@@ -20,7 +20,7 @@ public class CardMoneyTransferValidator {
     public Transaction<Transfer> validateTransferConfirm(TransferConfirm confirm) {
         String err = "Перевод №" + confirm.getOperationId() + " не подтвержден";
         if (isNotValidTransferConfirm(confirm)) {
-            throw new NotFoundEx(err + " из-за ошибок!");
+            throw new TransferException(err + " из-за ошибок!");
         }
         try {
             int ID = Integer.parseInt(confirm.getOperationId());
@@ -50,7 +50,7 @@ public class CardMoneyTransferValidator {
             throw new TransferException("Ошибка в номере карты получателя!");
         }
         if (transfer.getCardFromCVV() == null || transfer.getCardFromCVV().length() != 3) {
-            throw new TransferException("Ошибка в коде CVV карты отправителя: должно быть 3 цифры!");
+            throw new TransferException("Ошибка в коде CVV карты отправителя: ожидается 3 цифры!");
         }
         if (isBadDate(transfer.getCardFromValidTill())) {
             throw new TransferException("Некорректная дата! Ожидается в формате 'mm/YY'");
