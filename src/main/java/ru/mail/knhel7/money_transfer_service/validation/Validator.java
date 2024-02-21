@@ -6,11 +6,8 @@ import ru.mail.knhel7.money_transfer_service.model.http_request.Transfer;
 import ru.mail.knhel7.money_transfer_service.model.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
-import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Validator {
 
@@ -22,7 +19,7 @@ public class Validator {
 
     public Transaction<Transfer> validateTransferConfirm(TransferConfirm confirm) {
         String err = "Перевод №" + confirm.getOperationId() + " не подтвержден";
-        if (isValidTransferConfirm(confirm)) {
+        if (isNotValidTransferConfirm(confirm)) {
             throw new NotFoundEx(err + " из-за ошибок!");
         }
         try {
@@ -33,14 +30,10 @@ public class Validator {
         }
     }
 
-    public static boolean isValidTransferConfirm(TransferConfirm confirm) {
-        if (confirm == null) {
-            return false;
-        }
-        if (confirm.getCode() == null || confirm.getCode().length() != 4) {
-            return false;
-        }
-        return confirm.getOperationId() != null;
+    public static boolean isNotValidTransferConfirm(TransferConfirm confirm) {
+        return confirm == null ||
+                confirm.getCode() == null || confirm.getCode().length() != 4 ||
+                confirm.getOperationId() == null;
     }
 
     public void validateTransferMoney(Transfer transfer) {
