@@ -21,13 +21,13 @@ public class CardMoneyTransferValidator {
     public Transaction<Transfer> validateTransferConfirm(TransferConfirm confirm) {
         String title = "Перевод №" + confirm.getOperationId();
         if (isNotValidTransferConfirm(confirm)) {
-            throw new TransferException(title + " не подтвержден: неизвестный код...");
+            throw new TransferException(title + " не подтвержден: неизвестный код (" + confirm.getCode() + ")...");
         }
         try {
             int ID = Integer.parseInt(confirm.getOperationId());
             Transaction<Transfer> transaction = (Transaction<Transfer>) transactionsRepo.getTransactionByID(ID).get();
-            transaction.setCode(confirm.getCode());
             transaction.setComment(title + " подтвержден " + DateTimeUtil.timestamp());
+            transaction.setCode(confirm.getCode());
             return transaction;
         } catch (NumberFormatException NoSuchElementException) {
             throw new NotFoundEx(title + " не подтвержден: не найден...");
