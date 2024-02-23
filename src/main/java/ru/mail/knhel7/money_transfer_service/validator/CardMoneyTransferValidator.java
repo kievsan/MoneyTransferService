@@ -20,7 +20,7 @@ public class CardMoneyTransferValidator {
 
     public Transaction<Transfer> validateTransferConfirm(TransferConfirm confirm) {
         String title = "Перевод №" + confirm.getOperationId();
-        if (isNotValidTransferConfirm(confirm)) {
+        if (isBadTransferConfirm(confirm)) {
             throw new TransferException(title + " не подтвержден: неизвестный код (" + confirm.getCode() + ")...");
         }
         try {
@@ -34,7 +34,7 @@ public class CardMoneyTransferValidator {
         }
     }
 
-    public static boolean isNotValidTransferConfirm(TransferConfirm confirm) {
+    public static boolean isBadTransferConfirm(TransferConfirm confirm) {
         return confirm == null ||
                 confirm.getCode() == null || confirm.getCode().length() != 4 ||
                 confirm.getOperationId() == null;
@@ -80,7 +80,7 @@ public class CardMoneyTransferValidator {
         try {
             return Integer.parseInt(num2Char.trim().substring(0, 2));
         } catch (Exception ex) {
-            throw new TransferException("Ошибка в дате: месяц или год - не числа!");
+            throw new TransferException("Ошибка в сроке действия карты отправителя: месяц или год - не числа!");
         }
     }
 }
