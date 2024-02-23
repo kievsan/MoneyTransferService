@@ -6,6 +6,7 @@ import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.Transfe
 import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
+import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
 
 import java.time.LocalDateTime;
 
@@ -18,15 +19,18 @@ public class CardMoneyTransferValidator {
     }
 
     public Transaction<Transfer> validateTransferConfirm(TransferConfirm confirm) {
-        String err = "Перевод №" + confirm.getOperationId() + " не подтвержден";
+        String title = "Перевод №" + confirm.getOperationId();
         if (isNotValidTransferConfirm(confirm)) {
-            throw new TransferException(err + " из-за ошибок!");
+            throw new TransferException(title + " не подтвержден: неизвестный код...");
         }
         try {
             int ID = Integer.parseInt(confirm.getOperationId());
-            return (Transaction<Transfer>) transactionsRepo.getTransactionByID(ID).get();
+            Transaction<Transfer> transaction = (Transaction<Transfer>) transactionsRepo.getTransactionByID(ID).get();
+            transaction.setCode(confirm.getCode());
+            transaction.setComment(title + " подтвержден " + DateTimeUtil.timestamp());
+            return transaction;
         } catch (NumberFormatException NoSuchElementException) {
-            throw new NotFoundEx(err + ": не найден...");
+            throw new NotFoundEx(title + " не подтвержден: не найден...");
         }
     }
 

@@ -13,6 +13,8 @@ public class Transaction<T> {
     private final T operation;
     @Setter
     private  String comment = "Зарегистрирована новая операция " + DateTimeUtil.timestamp();
+    @Setter
+    private String code = null;
 
     public Transaction(T operation, Integer id) {
         this.id = id;
