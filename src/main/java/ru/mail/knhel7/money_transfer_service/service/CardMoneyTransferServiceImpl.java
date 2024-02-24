@@ -8,6 +8,7 @@ import ru.mail.knhel7.money_transfer_service.model.transfer.http_response.Transf
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.repository.CardMoneyTransactionsRepoImpl;
 import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
+import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
 import ru.mail.knhel7.money_transfer_service.validator.CardMoneyTransferValidator;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class CardMoneyTransferServiceImpl implements TransferService {
     @Override
     public ResponseEntity<TransferResponse> transferConfirm(TransferConfirm confirm) {
         Transaction<Transfer> transaction = validator.validateTransferConfirm(confirm);
-        validator.validateTransferMoney(transaction.getOperation());
+        transaction.setCode(confirm.getCode());
         repo.executeTransfer(transaction);
         return ResponseEntity.ok(new TransferResponse(transaction.getId()));
     }

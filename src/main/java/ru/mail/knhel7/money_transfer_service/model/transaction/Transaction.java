@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
 
+import java.util.Objects;
+
 @Getter
 public class Transaction<T> {
 
@@ -19,5 +21,20 @@ public class Transaction<T> {
     public Transaction(T operation, Integer id) {
         this.id = id;
         this.operation = operation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction<?> that = (Transaction<?>) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getOperation(), that.getOperation()) &&
+                Objects.equals(getCode(), that.getCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getOperation(), getCode());
     }
 }

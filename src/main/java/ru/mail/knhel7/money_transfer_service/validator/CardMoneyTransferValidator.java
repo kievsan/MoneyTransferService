@@ -25,10 +25,7 @@ public class CardMoneyTransferValidator {
         }
         try {
             int ID = Integer.parseInt(confirm.getOperationId());
-            Transaction<Transfer> transaction = (Transaction<Transfer>) transactionsRepo.getTransactionByID(ID).get();
-            transaction.setComment(title + " подтвержден " + DateTimeUtil.timestamp());
-            transaction.setCode(confirm.getCode());
-            return transaction;
+            return (Transaction<Transfer>) transactionsRepo.getTransactionByID(ID).get();
         } catch (NumberFormatException NoSuchElementException) {
             throw new NotFoundEx(title + " не подтвержден: не найден...");
         }

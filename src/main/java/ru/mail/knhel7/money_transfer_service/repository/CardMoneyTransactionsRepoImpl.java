@@ -1,5 +1,6 @@
 package ru.mail.knhel7.money_transfer_service.repository;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -21,17 +22,16 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
     private final static Map<Integer, Transaction<?>> transactions = new ConcurrentHashMap<>();
     private final static Map<String, String> msg = new ConcurrentHashMap<>();
     static {
-        msg.put("Accept", "Подтверждена операция");
+        msg.put("Accept", "Перевод подтвержден");
         msg.put("TransferFail", "Транзакция не завершена. Ошибка записи данных");
     }
 
     private final AtomicInteger id = new AtomicInteger(1);
     private final AtomicInteger logHttpId = new AtomicInteger(1);
+    final LoggerAssistant logger = new LoggerAssistant();
 
     @Value("${server.port}")
     private String port;
-
-    final LoggerAssistant logger = new LoggerAssistant();
 
     private Integer nextID() {
         return id.getAndIncrement();
@@ -49,7 +49,7 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
             transactions.put(transaction.getId(), transaction);
             log.info("[{}: HTTP {}] {}", port, nextLogHttpID(),
                     logger.logTransaction(transaction, "The transfer was confirmed"));
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             throw new OtherTransferEx("HTTP " + port + ": " + msg.get("TransferFail"));
         }
     }
@@ -61,7 +61,7 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
             transactions.put(transaction.getId(), transaction);
             log.info("[{}: HTTP {}] {}", port, nextLogHttpID(),
                     logger.logTransaction(transaction, "The transfer was received"));
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             throw new OtherTransferEx(msg.get("TransferFail"));
         }
         return transaction;

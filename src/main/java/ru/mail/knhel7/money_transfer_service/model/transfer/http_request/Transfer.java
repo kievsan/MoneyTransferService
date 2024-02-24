@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.mail.knhel7.money_transfer_service.model.Money;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 public class Transfer {
@@ -47,5 +49,25 @@ public class Transfer {
         return "Card №" + cardFromNumber + " ==> " +
                 amount + " + " + setCommission() + ":" + feePercent + "%" +
                 " ==> Card №" + cardToNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transfer transfer = (Transfer) o;
+        return getFeePercent() == transfer.getFeePercent() &&
+                Objects.equals(getCardFromNumber(), transfer.getCardFromNumber()) &&
+                Objects.equals(getCardFromValidTill(), transfer.getCardFromValidTill()) &&
+                Objects.equals(getCardFromCVV(), transfer.getCardFromCVV()) &&
+                Objects.equals(getCardToNumber(), transfer.getCardToNumber()) &&
+                Objects.equals(getAmount(), transfer.getAmount());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                getCardFromNumber(), getCardFromValidTill(), getCardFromCVV(),
+                getCardToNumber(), getAmount(), getFeePercent());
     }
 }
