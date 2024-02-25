@@ -1,16 +1,18 @@
 package ru.mail.knhel7.money_transfer_service.repository;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import ru.mail.knhel7.money_transfer_service.exception.NotFoundEx;
 import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
-import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.TransferConfirm;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
 import ru.mail.knhel7.money_transfer_service.util.LoggerAssistant;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -42,15 +44,31 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
     }
 
     @Override
-    public void executeTransfer(Transaction<Transfer> transaction) {
-        transaction.getOperation().setCommission();
-        transaction.setComment(msg.get("Accept") + " " + DateTimeUtil.timestamp());
+    public Transaction<Transfer> executeTransfer(Transaction<Transfer> transaction) {
+        transaction.getOperation().setFeeCommission();
         try {
             transactions.put(transaction.getId(), transaction);
             log.info("[{}: HTTP {}] {}", port, nextLogHttpID(),
                     logger.logTransaction(transaction, "The transfer was confirmed"));
         } catch (RuntimeException ex) {
             throw new OtherTransferEx("HTTP " + port + ": " + msg.get("TransferFail"));
+        }
+        return transaction;
+    }
+
+    @Override
+    public Transaction<Transfer> confirmTransfer(TransferConfirm confirm) {
+        try {
+            int ID = Integer.parseInt(confirm.getOperationId());
+            Transaction<?> transaction = getTransactionByID(ID).orElseThrow();
+            if (Transfer.class != transaction.getOperation().getClass()) {
+                throw new ClassNotFoundException();
+            }
+            transaction.setCode(confirm.getCode());
+            transaction.setComment(msg.get("Accept") + " " + DateTimeUtil.timestamp());
+            return (Transaction<Transfer>) transaction;
+        } catch (NumberFormatException | NoSuchElementException | ClassNotFoundException ex) {
+            throw new NotFoundEx(confirm + " не подтвержден: не найден...");
         }
     }
 

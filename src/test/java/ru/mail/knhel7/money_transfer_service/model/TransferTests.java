@@ -1,7 +1,7 @@
 package ru.mail.knhel7.money_transfer_service.model;
 
 import org.junit.jupiter.api.*;
-import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.Transfer;
 
 import java.util.Objects;
 
@@ -72,7 +72,7 @@ public class TransferTests {
     @Test
     @DisplayName("transferCommissionTest")
     public void transferCommissionEqualTest() {
-        Assertions.assertEquals(1670, transfer.setCommission().value());
+        Assertions.assertEquals(1670, transfer.setFeeCommission().value());
     }
 }
 

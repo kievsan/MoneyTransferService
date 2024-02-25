@@ -2,7 +2,7 @@ package ru.mail.knhel7.money_transfer_service.model;
 
 import org.junit.jupiter.api.*;
 import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
-import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.Transfer;
 
 import java.util.Objects;
 

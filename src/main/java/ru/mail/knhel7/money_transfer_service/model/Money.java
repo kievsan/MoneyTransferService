@@ -7,7 +7,9 @@ import java.util.Objects;
 
 
 
-public record Money(@Getter String currency , @Getter @Min(value = 0, message = "should not be negative") Integer value) {
+public record Money(@Getter String currency ,
+                    @Getter @Min(value = 0, message = "should not be negative"
+                    ) Integer value) {
 
     public Money() {
         this(0);
