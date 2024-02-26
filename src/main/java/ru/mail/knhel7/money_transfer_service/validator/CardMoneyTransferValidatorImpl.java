@@ -17,6 +17,10 @@ public class CardMoneyTransferValidatorImpl implements TransferValidator {
         }
     }
 
+    public static boolean isBadTransferConfirm(TransferConfirm confirm) {
+        return confirm == null || confirm.getCode().length() != 4 || confirm.getOperationId().isEmpty();
+    }
+
     @Override
     public void validateTransferMoney(Transfer transfer) {
         if (transfer == null) {
@@ -60,11 +64,5 @@ public class CardMoneyTransferValidatorImpl implements TransferValidator {
         } catch (Exception ex) {
             throw new TransferException("Ошибка в сроке действия карты отправителя: месяц или год - не числа!");
         }
-    }
-
-    public static boolean isBadTransferConfirm(TransferConfirm confirm) {
-        return confirm == null ||
-                confirm.getCode() == null || confirm.getCode().length() != 4 ||
-                confirm.getOperationId() == null;
     }
 }
