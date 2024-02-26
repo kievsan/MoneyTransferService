@@ -20,9 +20,8 @@ public class CardMoneyTransactionsRepoImplTests {
             new Money(167000)
     );
     private final TransferConfirm confirm = new TransferConfirm("1", "0000");
-
-    private Transaction<Transfer> transaction;
-    private TransactionsRepo repository;
+    private final TransactionsRepo repository = new CardMoneyTransactionsRepoImpl();
+    private final Transaction<Transfer> transaction = new Transaction<>(transfer, 1);
 
     @BeforeAll
     public static void testSuiteInit() {
@@ -37,16 +36,15 @@ public class CardMoneyTransactionsRepoImplTests {
 
     @BeforeEach
     public void runTest() {
-        System.out.println("Starting new test" + this);
+        System.out.println("-----------Starting new test " + this);
         testStartTime = System.nanoTime();
-        repository = new CardMoneyTransactionsRepoImpl();
-        transaction = new Transaction<>(transfer, 1);
+        System.out.println("run: " + repository.getTransactions());
     }
 
     @AfterEach
     public void finishTest() {
-        repository = null;
-        transaction = null;
+        System.out.println("finish: " + repository.getTransactions());
+        repository.clearTransactions();
         System.out.println("Current test complete:" + (System.nanoTime() - testStartTime));
     }
 
@@ -65,7 +63,7 @@ public class CardMoneyTransactionsRepoImplTests {
     @DisplayName("confirmTransferExTest")
     public void confirmTransferExTest() {
         try {
-            repository.getTransactions().put(2, transaction);
+            repository.getTransactions().put(2, new Transaction<>(transfer, 2));
             Assertions.assertThrows(NotFoundEx.class, () -> repository.confirmTransfer(confirm));
         } catch (RuntimeException ex) {
             Assertions.fail();

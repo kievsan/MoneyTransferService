@@ -11,8 +11,8 @@ import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
 import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
 import ru.mail.knhel7.money_transfer_service.util.LoggerAssistant;
 
+import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -34,6 +34,9 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
 
     @Value("${server.port}")
     private String port;
+
+    public CardMoneyTransactionsRepoImpl() {
+    }
 
     private Integer nextID() {
         return id.getAndIncrement();
@@ -67,7 +70,8 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
             transaction.setCode(confirm.getCode());
             transaction.setComment(msg.get("Accept") + " " + DateTimeUtil.timestamp());
             return (Transaction<Transfer>) transaction;
-        } catch (NumberFormatException | NoSuchElementException | ClassNotFoundException ex) {
+//        } catch (NumberFormatException | NoSuchElementException | ClassNotFoundException ex) {
+        } catch (RuntimeException | ClassNotFoundException ex) {
             throw new NotFoundEx(confirm + " не подтвержден: не найден...");
         }
     }
@@ -93,5 +97,15 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
     @Override
     public Map<Integer, Transaction<?>> getTransactions() {
         return transactions;
+    }
+
+    @Override
+    public void clearTransactions() {
+        while (!transactions.isEmpty()) {
+            List<Integer> IDs = transactions.keySet().stream().toList();
+            for (int id: IDs) {
+                transactions.remove(id);
+            }
+        }
     }
 }

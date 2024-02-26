@@ -13,4 +13,5 @@ public interface TransactionsRepo {
     Transaction<Transfer> addTransferTransaction(Transfer transfer);
     Optional<Transaction<?>> getTransactionByID(int id);
     Map<Integer, Transaction<?>> getTransactions();
+    void clearTransactions();
 }
