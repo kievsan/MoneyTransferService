@@ -1,45 +1,27 @@
 package ru.mail.knhel7.money_transfer_service.validator;
 
-import ru.mail.knhel7.money_transfer_service.exception.NotFoundEx;
+import org.springframework.stereotype.Service;
 import ru.mail.knhel7.money_transfer_service.exception.TransferException;
-import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.Transfer;
-import ru.mail.knhel7.money_transfer_service.model.transfer.http_request.TransferConfirm;
-import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
-import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
-import ru.mail.knhel7.money_transfer_service.util.DateTimeUtil;
+import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.Transfer;
+import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.TransferConfirm;
 
 import java.time.LocalDateTime;
 
-public class CardMoneyTransferValidator {
+@Service
+public class CardMoneyTransferValidatorImpl implements TransferValidator {
 
-    private final TransactionsRepo transactionsRepo;
-
-    public CardMoneyTransferValidator(TransactionsRepo transactionsRepo) {
-        this.transactionsRepo = transactionsRepo;
-    }
-
-    public Transaction<Transfer> validateTransferConfirm(TransferConfirm confirm) {
-        String title = "Перевод №" + confirm.getOperationId();
+    @Override
+    public void validateTransferConfirm(TransferConfirm confirm) {
         if (isBadTransferConfirm(confirm)) {
-            throw new TransferException(title + " не подтвержден: неизвестный код (" + confirm.getCode() + ")...");
-        }
-        try {
-            int ID = Integer.parseInt(confirm.getOperationId());
-            Transaction<Transfer> transaction = (Transaction<Transfer>) transactionsRepo.getTransactionByID(ID).get();
-            transaction.setComment(title + " подтвержден " + DateTimeUtil.timestamp());
-            transaction.setCode(confirm.getCode());
-            return transaction;
-        } catch (NumberFormatException NoSuchElementException) {
-            throw new NotFoundEx(title + " не подтвержден: не найден...");
+            throw new TransferException(confirm + " не подтвержден: неизвестный код (" + confirm.getCode() + ")...");
         }
     }
 
     public static boolean isBadTransferConfirm(TransferConfirm confirm) {
-        return confirm == null ||
-                confirm.getCode() == null || confirm.getCode().length() != 4 ||
-                confirm.getOperationId() == null;
+        return confirm == null || confirm.getCode().length() != 4 || confirm.getOperationId().isEmpty();
     }
 
+    @Override
     public void validateTransferMoney(Transfer transfer) {
         if (transfer == null) {
             throw new TransferException("Пустой перевод не предусмотрен!");

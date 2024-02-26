@@ -1,4 +1,4 @@
-package ru.mail.knhel7.money_transfer_service.model.transfer.http_request;
+package ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -17,6 +17,6 @@ public class TransferConfirm {
 
     @Override
     public String toString() {
-        return "The transfer №" + operationId + " has been confirmed!";
+        return "Перевод №" + operationId;
     }
 }
