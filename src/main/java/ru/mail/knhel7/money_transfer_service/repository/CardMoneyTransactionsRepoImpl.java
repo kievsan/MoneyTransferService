@@ -101,11 +101,8 @@ public class CardMoneyTransactionsRepoImpl implements TransactionsRepo {
 
     @Override
     public void clearTransactions() {
-        while (!transactions.isEmpty()) {
-            List<Integer> IDs = transactions.keySet().stream().toList();
-            for (int id: IDs) {
-                transactions.remove(id);
-            }
+        for (int id: transactions.keySet().stream().toList()) {
+            transactions.remove(id);
         }
     }
 }
