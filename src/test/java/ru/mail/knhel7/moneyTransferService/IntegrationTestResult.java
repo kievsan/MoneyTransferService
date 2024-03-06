@@ -1,4 +1,4 @@
-package ru.mail.knhel7.money_transfer_service;
+package ru.mail.knhel7.moneyTransferService;
 
 import lombok.AllArgsConstructor;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package ru.mail.knhel7.money_transfer_service.validator;
+package ru.mail.knhel7.moneyTransferService.validator;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,8 +8,6 @@ import ru.mail.knhel7.moneyTransferService.exception.TransferException;
 import ru.mail.knhel7.moneyTransferService.model.Money;
 import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.Transfer;
 import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.TransferConfirm;
-import ru.mail.knhel7.moneyTransferService.validator.CardMoneyTransferValidatorImpl;
-import ru.mail.knhel7.moneyTransferService.validator.TransferValidator;
 
 import java.util.stream.Stream;
 

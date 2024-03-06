@@ -1,4 +1,4 @@
-package ru.mail.knhel7.money_transfer_service.repository;
+package ru.mail.knhel7.moneyTransferService.repository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
@@ -8,8 +8,6 @@ import ru.mail.knhel7.moneyTransferService.model.Money;
 import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.TransferConfirm;
 import ru.mail.knhel7.moneyTransferService.model.transaction.Transaction;
 import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.Transfer;
-import ru.mail.knhel7.moneyTransferService.repository.CardMoneyTransactionsRepoImpl;
-import ru.mail.knhel7.moneyTransferService.repository.TransactionsRepo;
 
 public class CardMoneyTransactionsRepoImplTests {
 

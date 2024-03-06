@@ -1,4 +1,4 @@
-package ru.mail.knhel7.money_transfer_service.service;
+package ru.mail.knhel7.moneyTransferService.service;
 
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
@@ -10,8 +10,6 @@ import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transf
 import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_response.TransferResponse;
 import ru.mail.knhel7.moneyTransferService.model.transaction.Transaction;
 import ru.mail.knhel7.moneyTransferService.repository.TransactionsRepo;
-import ru.mail.knhel7.moneyTransferService.service.CardMoneyTransferServiceImpl;
-import ru.mail.knhel7.moneyTransferService.service.TransferService;
 
 public class CardMoneyTransferServiceImplTests {
 
