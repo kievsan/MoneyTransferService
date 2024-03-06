@@ -1,14 +1,15 @@
 HELP.md
 target/
-!arh/.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
 out/
 arh/
+.mvn
+.mvn/*
 *.log
 *.gz
-arh/.mvn/
 
 ### STS ###
 .apt_generated
