@@ -13,7 +13,6 @@ import ru.mail.knhel7.moneyTransferService.validator.CardMoneyTransferValidatorI
 
 import java.util.List;
 
-@Slf4j
 @Service
 public class CardMoneyTransferServiceImpl implements TransferService {
 
