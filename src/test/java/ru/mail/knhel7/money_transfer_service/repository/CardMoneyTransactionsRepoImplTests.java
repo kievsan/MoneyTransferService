@@ -2,12 +2,14 @@ package ru.mail.knhel7.money_transfer_service.repository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
-import ru.mail.knhel7.money_transfer_service.exception.NotFoundEx;
-import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
-import ru.mail.knhel7.money_transfer_service.model.Money;
-import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.TransferConfirm;
-import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
-import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.Transfer;
+import ru.mail.knhel7.moneyTransferService.exception.NotFoundException;
+import ru.mail.knhel7.moneyTransferService.exception.OtherTransferException;
+import ru.mail.knhel7.moneyTransferService.model.Money;
+import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.TransferConfirm;
+import ru.mail.knhel7.moneyTransferService.model.transaction.Transaction;
+import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.Transfer;
+import ru.mail.knhel7.moneyTransferService.repository.CardMoneyTransactionsRepoImpl;
+import ru.mail.knhel7.moneyTransferService.repository.TransactionsRepo;
 
 public class CardMoneyTransactionsRepoImplTests {
 
@@ -55,7 +57,7 @@ public class CardMoneyTransactionsRepoImplTests {
             Transaction<Transfer> actual = repository.addTransferTransaction(transfer);
             Assertions.assertEquals(transaction, actual);
         } catch (RuntimeException ex) {
-            Assertions.assertEquals(OtherTransferEx.class, ex.getClass());
+            Assertions.assertEquals(OtherTransferException.class, ex.getClass());
         }
     }
 
@@ -64,7 +66,7 @@ public class CardMoneyTransactionsRepoImplTests {
     public void confirmTransferExTest() {
         try {
             repository.getTransactions().put(2, new Transaction<>(transfer, 2));
-            Assertions.assertThrows(NotFoundEx.class, () -> repository.confirmTransfer(confirm));
+            Assertions.assertThrows(NotFoundException.class, () -> repository.confirmTransfer(confirm));
         } catch (RuntimeException ex) {
             Assertions.fail();
         }
@@ -90,7 +92,7 @@ public class CardMoneyTransactionsRepoImplTests {
             transaction1 = repository.addTransferTransaction(transfer);
             transaction2 = repository.executeTransfer(transaction1);
         } catch (RuntimeException ex) {
-            Assertions.assertEquals(OtherTransferEx.class, ex.getClass());
+            Assertions.assertEquals(OtherTransferException.class, ex.getClass());
             // Assertions.fail();
             return;
         }

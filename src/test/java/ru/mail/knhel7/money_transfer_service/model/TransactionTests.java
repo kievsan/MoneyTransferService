@@ -1,8 +1,9 @@
 package ru.mail.knhel7.money_transfer_service.model;
 
 import org.junit.jupiter.api.*;
-import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
-import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.Transfer;
+import ru.mail.knhel7.moneyTransferService.model.Money;
+import ru.mail.knhel7.moneyTransferService.model.transaction.Transaction;
+import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.Transfer;
 
 import java.util.Objects;
 

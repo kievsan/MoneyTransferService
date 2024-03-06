@@ -3,13 +3,15 @@ package ru.mail.knhel7.money_transfer_service.service;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
-import ru.mail.knhel7.money_transfer_service.exception.OtherTransferEx;
-import ru.mail.knhel7.money_transfer_service.model.Money;
-import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.Transfer;
-import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.TransferConfirm;
-import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_response.TransferResponse;
-import ru.mail.knhel7.money_transfer_service.model.transaction.Transaction;
-import ru.mail.knhel7.money_transfer_service.repository.TransactionsRepo;
+import ru.mail.knhel7.moneyTransferService.exception.OtherTransferException;
+import ru.mail.knhel7.moneyTransferService.model.Money;
+import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.Transfer;
+import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.TransferConfirm;
+import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_response.TransferResponse;
+import ru.mail.knhel7.moneyTransferService.model.transaction.Transaction;
+import ru.mail.knhel7.moneyTransferService.repository.TransactionsRepo;
+import ru.mail.knhel7.moneyTransferService.service.CardMoneyTransferServiceImpl;
+import ru.mail.knhel7.moneyTransferService.service.TransferService;
 
 public class CardMoneyTransferServiceImplTests {
 
@@ -69,7 +71,7 @@ public class CardMoneyTransferServiceImplTests {
             // ResponseEntity<TransferResponse> expected = ResponseEntity.ok(new TransferResponse(11));
             Assertions.assertEquals(expected, transferResponse);
         } catch (RuntimeException ex) {
-            Assertions.assertEquals(OtherTransferEx.class, ex.getClass());
+            Assertions.assertEquals(OtherTransferException.class, ex.getClass());
         }
     }
 
@@ -91,7 +93,7 @@ public class CardMoneyTransferServiceImplTests {
             ResponseEntity<TransferResponse> expected = ResponseEntity.ok(response);
             Assertions.assertEquals(expected, transferResponse);
         } catch (RuntimeException ex) {
-            Assertions.assertEquals(OtherTransferEx.class, ex.getClass());
+            Assertions.assertEquals(OtherTransferException.class, ex.getClass());
             // Assertions.fail();
         }
     }

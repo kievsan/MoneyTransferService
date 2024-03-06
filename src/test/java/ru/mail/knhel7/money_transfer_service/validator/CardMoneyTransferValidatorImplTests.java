@@ -4,10 +4,12 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
-import ru.mail.knhel7.money_transfer_service.exception.TransferException;
-import ru.mail.knhel7.money_transfer_service.model.Money;
-import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.Transfer;
-import ru.mail.knhel7.money_transfer_service.model.operation.card_operation.transfer.http_request.TransferConfirm;
+import ru.mail.knhel7.moneyTransferService.exception.TransferException;
+import ru.mail.knhel7.moneyTransferService.model.Money;
+import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.Transfer;
+import ru.mail.knhel7.moneyTransferService.model.operation.card_operation.transfer.http_request.TransferConfirm;
+import ru.mail.knhel7.moneyTransferService.validator.CardMoneyTransferValidatorImpl;
+import ru.mail.knhel7.moneyTransferService.validator.TransferValidator;
 
 import java.util.stream.Stream;
 
